@@ -322,7 +322,7 @@ body
   width: 100%
   position: relative
   
-  input
+  input, textarea
     padding: 15px
     border: 1px solid #d7f2f3
     border-radius: 15px
@@ -330,6 +330,7 @@ body
     line-height: 130%
     width: 100%
     max-width: 100%
+    transition: .3s all
   label
     font-size: 18px
     line-height: 130%
@@ -338,10 +339,15 @@ body
     left: 15px
     transition: .3s all
     color: #b9b9b9
-  input:focus + label
+  input:focus, textarea:focus
+    border: 1px solid #181818
+  input:focus + label, textarea:focus + label
     top: -13px
     color: #181818
     left: 20px
     background: #fff
   label.hidden
     opacity: 0
+  textarea
+    min-height: 150px
+    resize: none
