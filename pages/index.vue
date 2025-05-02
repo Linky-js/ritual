@@ -7,12 +7,9 @@ import { useApiStore } from '~/stores/api'
 
 const apiStore = useApiStore()
 const { data: page } = await useAsyncData('homepage', () =>
-  $fetch(`${apiStore.apiUrl}pages/9?acf_fields=true&_embed`)
+  $fetch(`${apiStore.apiUrl}pages/7?acf_fields=true&_embed`)
 );
 
-const { data: projects } = await useAsyncData('projects', () =>
-  $fetch(`${apiStore.apiUrl}project?per_page=4&_embed&acf_fields=true`)
-);
 
 const clientsArray = ref([]);
 
@@ -38,16 +35,24 @@ if (page.value?.acf?.klinety?.length) {
   
 }
 
-const pergamentObject = computed(() =>
+const mainHomeObject = computed(() =>
   page.value ? {
-    suptitle: page.value.acf.tajtl,
-    summary: page.value.acf.tekst_o_kompanii
+    title: page.value.acf.title_1,
+    buttonLeft: page.value.acf.button_text_left_1,
+    buttonRight: page.value.acf.button_text_right_1
   } : null
 );
-const servicesLinks = computed(() =>
+
+const aboutHomeObject = computed(() =>
   page.value ? {
-    servicesLinks: page.value.acf.uslugi,
-    
+    text: page.value.acf.text_2,
+  } : null
+);
+const servicesHomeObject = computed(() =>
+  page.value ? {
+    head: page.value.acf.title_3,
+    text: page.value.acf.text_3,
+    quote: page.value.acf.quote_4
   } : null
 );
 const expertiseObject = computed(() =>
@@ -64,9 +69,9 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    <MainHome />
-    <AboutHome  />
-    <ServicesHome />
+    <MainHome :mainHomeObject="mainHomeObject" />
+    <AboutHome :aboutHomeObject="aboutHomeObject"  />
+    <ServicesHome :servicesHomeObject="servicesHomeObject" />
   </div>
 </template>
 <style scoped>

@@ -1,22 +1,26 @@
 <script setup>
+
+const props = defineProps({
+    servicesHomeObject: {
+        type: Object,
+        default: {
+            
+        }
+    }
+})
 </script>
 <template>
   <div class="services">
     <div class="container">
       <div class="services__content">
-        <h2 class="head-h2">Полный спектр ритуальных услуг</h2>
-        <div class="subhead">
-          Наши специалисты помогают семьям в организации всех этапов похорон.
-          <br />
-          Мы предлагаем заботливое и внимательное отношение, а также
-          профессионализм, который поможет пройти через все испытания с
-          достоинством и уважением к памяти ушедших.
+        <h2 class="head-h2">{{ servicesHomeObject.head }}</h2>
+        <div class="subhead" v-html="servicesHomeObject.text">
+          
         </div>
       </div>
       <div class="services__dop-content">
        <p>
-            Задача наших специалистов – обеспечить достойное и уважительное
-            прощание, учитывая пожелания семьи и религиозные традиции.
+            {{ servicesHomeObject.quote }}
        </p>
       </div>
     </div>
