@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: true },
   modules: ["@pinia/nuxt"],
-  css: ["@/assets/css/style.css"],
+  css: ["@/assets/css/reset.sass"],
   ssr: true, 
   nitro: {
     preset: 'static',
