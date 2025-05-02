@@ -1,4 +1,7 @@
 <script setup>
+import MainHome from "~/components/home/MainHome.vue";
+import AboutHome from "~/components/home/AboutHome.vue";
+import ServicesHome from "~/components/home/ServicesHome.vue";
 import { ref, watch, onMounted } from "vue";
 import { useApiStore } from '~/stores/api'
 
@@ -61,7 +64,9 @@ onMounted(() => {
 </script>
 <template>
   <div>
-    
+    <MainHome />
+    <AboutHome  />
+    <ServicesHome />
   </div>
 </template>
 <style scoped>

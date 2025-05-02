@@ -1,6 +1,5 @@
 <script setup>
 import { useRoute } from "vue-router";
-
 </script>
 <template>
   <Head>
@@ -12,12 +11,11 @@ import { useRoute } from "vue-router";
       content="FNh4WtLjLHTiTomFdGINF_a52SB5CrTD0Uo-8xbUWV0"
     />
   </Head>
-  <HeaderBlock />
-
-  <NuxtPage/>
-
-  <FooterBlock />
+  <div class="wrapper">
+    <HeaderBlock />
+    <NuxtPage />
+    <FooterBlock />
+  </div>
 </template>
 <style>
-
 </style>
