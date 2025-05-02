@@ -1,3 +1,44 @@
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useCookie } from "#app";
+
+const inputValue = ref("");
+const inputPassword = ref("");
+const errorMsg = ref("");
+
+const router = useRouter();
+
+const login = async () => {
+  errorMsg.value = "";
+
+  try {
+    const response = await $fetch(
+      "https://abisrs.ru/wordpress/wp-json/jwt-auth/v1/token",
+      {
+        method: "POST",
+        body: {
+          username: inputValue.value,
+          password: inputPassword.value,
+        },
+      }
+    );
+
+    console.log("response", response);
+    
+    const token = response.token;
+    const cookie = useCookie("auth_token");
+    cookie.value = token;
+
+    // Перенаправление
+    // router.push("/account");
+  } catch (e) {
+    errorMsg.value = "Неверный логин или пароль";
+    console.error("Ошибка входа:", e);
+  }
+};
+</script>
+
 <template>
   <div class="login">
     <div class="container">
@@ -7,32 +48,39 @@
         </h2>
         <div class="login__form">
           <div class="box-input">
-            <input v-model="inputValue" type="text" id="login" placeholder=" " ref="inputRef" />
-            <label :class="{ hidden: inputValue.trim() !== '' }" for="login">Логин</label>
+            <input
+              v-model="inputValue"
+              type="text"
+              id="login"
+              placeholder=" "
+              ref="inputRef"
+            />
+            <label :class="{ hidden: inputValue.trim() !== '' }" for="login"
+              >Логин</label
+            >
           </div>
           <div class="box-input">
-            <input v-model="inputPassword" type="password" id="password" placeholder=" " ref="inputRef" />
-            <label :class="{ hidden: inputPassword.trim() !== '' }" for="password">Пароль</label>
+            <input
+              v-model="inputPassword"
+              type="password"
+              id="password"
+              placeholder=" "
+              ref="inputRef"
+            />
+            <label
+              :class="{ hidden: inputPassword.trim() !== '' }"
+              for="password"
+              >Пароль</label
+            >
           </div>
-          <button class="btn"><span>Вход</span></button>
+          <button class="btn" @click.prevent="login"><span>Вход</span></button>
+          <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
         </div>
       </div>
     </div>
   </div>
-  <ModalCall />
 </template>
 
-<script lang="ts" setup>
-import { ref } from 'vue'
-import ModalCall from '~/components/common/ModalCall.vue'
-
-const inputValue = ref('')
-const inputPassword = ref('')
-const inputRef = ref()
-
-
-
-</script>
 
 <style lang="sass" scoped>
 .container
