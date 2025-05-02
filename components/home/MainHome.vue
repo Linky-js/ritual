@@ -26,7 +26,6 @@ const props = defineProps({
 </template>
 <style lang="sass" scoped>
 .main
-  
   padding: 184px 0
   &__btns
     display: flex
