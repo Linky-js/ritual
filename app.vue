@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 </script>
 <template>
   <Head>
-    <Title>Пергамент - бюро креативных решений</Title>
+    <Title>ABISRS</Title>
     <Meta name="description" content="Магазин выставок" />
     <Meta name="yandex-verification" content="e490c6f4b37e1903" />
     <Meta
