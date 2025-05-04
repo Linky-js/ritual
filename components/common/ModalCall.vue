@@ -73,6 +73,7 @@ const inputPhoto = ref('')
 const inputOrganization = ref('')
 const inputLevel = ref('')
 const inputDop = ref('')
+
 </script>
 
 <style lang="sass" scoped>
