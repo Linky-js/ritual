@@ -1,3 +1,42 @@
+<script setup>
+import SpecItem from '~/components/common/SpecItem.vue'
+import def_spec from '~/assets/img/def-spec.jpg'
+
+const props = defineProps({
+  specialistsBlockObject: {
+    type: Object,
+    default: {}
+  }
+})
+const specialists = [
+  {
+    name: 'Наталья Иванова',
+    description: 'Психолог, стаж 10 лет',
+    img: def_spec,
+  },
+  {
+    name: 'Игорь Смирнов',
+    description: 'Ритуальный агент',
+    img: def_spec,
+  },
+  {
+    name: 'Игорь Смирнов',
+    description: 'Ритуальный агент',
+    img: def_spec,
+  },
+  {
+    name: 'Игорь Смирнов',
+    description: 'Ритуальный агент',
+    img: def_spec,
+  },
+]
+
+onMounted(() => {
+  console.log('specialistsBlockObject', props.specialistsBlockObject);
+  
+})
+</script>
+
 <template>
   <div class="spec">
     <div class="container">
@@ -21,32 +60,7 @@
   </div>
 </template>
 
-<script setup>
-import SpecItem from '~/components/common/SpecItem.vue'
-import def_spec from '~/assets/img/def-spec.jpg'
-const specialists = [
-  {
-    name: 'Наталья Иванова',
-    description: 'Психолог, стаж 10 лет',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-]
-</script>
+
 
 <style lang="sass" scoped>
 .spec

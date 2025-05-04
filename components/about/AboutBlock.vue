@@ -1,35 +1,25 @@
 <script setup>
-import about_1 from '~/assets/img/about-1.png'
-import about_2 from '~/assets/img/about-2.png'
-import about_3 from '~/assets/img/about-3.png'
-const items = [
-  {
-    title: 'Мировозрение',
-    text: '<p>АБИСРС основан на глубоком уважении к человеческой жизни и важности достойного прощания с усопшими. Мы понимаем, что смерть — это неизбежная часть человеческого существования, и считаем своей задачей обеспечить максимально бережное и профессиональное сопровождение этого сложного процесса для родственников и близких.</p>',
-    image: about_1,
-  },
-  {
-    title: 'Наши цели',
-    text: '<p>Повышение стандартов качества услуг, связанных с бальзамированием и ритуальным сервисом, что включает использование современных технологий и методов.</p> <p>Обеспечение соблюдения моральных и этических стандартов в работе со скорбящими семьями и в процессе оказания услуг.</p> <p>Сбор и распространение актуальной информации о новейших достижениях и тенденциях в области бальзамирования и ритуальных услуг.</p>',
-    image: about_2,
-  },
-  {
-    title: 'Мы создаем будущее...',
-    text: '<p>Альянс бальзамировщиков и специалистов ритуального сервиса — это первый шаг к созданию сильного профессионального сообщества, способного поднимать уровень ритуальных услуг и менять отношение общества к важнейшей части похоронного дела.</p>',
-    image: about_3,
-  },
-]
+
+const props = defineProps({
+  aboutBlockObject: {
+    type: Object,
+    default: {}
+  }
+})
+onMounted(() => {
+  console.log('aboutBlockObject', props.aboutBlockObject);
+})
+
 </script>
 <template>
   <div class="about">
     <div class="container">
       <div class="about__text">
-        Альянс бальзамировщиков и специалистов ритуального сервиса представляет собой уникальную платформу, которая
-        объединяет профессионалов, стремящихся к повышению стандартов своей деятельности.
+        {{ aboutBlockObject.text }}
       </div>
     </div>
     <div class="about__list">
-      <div class="about__item" v-for="(item, index) in items" :key="index" :style="{ backgroundImage: `url(${item.image})` }">
+      <div class="about__item" v-for="(item, index) in aboutBlockObject.items" :key="index" :style="{ backgroundImage: `url(${item.image})` }">
         <div class="container">
           <div class="about__item-content">
             <div class="about__item-head head"><span>{{ item.title }}</span></div>

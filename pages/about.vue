@@ -3,13 +3,99 @@ import TitleBlock from "~/components/common/TitleBlock.vue";
 import Breadcrumbs from "~/components/common/Breadcrumbs.vue";
 import AboutBlock from "~/components/about/AboutBlock.vue";
 import SpecialistsBlock from "~/components/about/SpecialistsBlock.vue";
+import { useApiStore } from '~/stores/api'
+
+const apiStore = useApiStore()
+
+const { data: page } = await useAsyncData('aboutpage', () =>
+  $fetch(`${apiStore.apiUrl}pages/47?acf_fields=true&_embed`)
+);
+
+const clientsArray = ref([]);
+const aboutBlockObject = ref(null);
+const specialistsBlockObject = ref(null);
+async function getImageUrl(id) {
+  if (!id) return null;
+  try {
+    const res = await $fetch(`${apiStore.apiUrl}media/${id}`);
+    return res.source_url;
+  } catch (error) {
+    console.error("Ошибка при получении изображения:", error);
+    return null;
+  }
+}
+
+async function prepareAboutBlock() {
+  if (!page.value) return;
+
+  const [img1, img2, img3] = await Promise.all([
+    getImageUrl(page.value.acf.kartinka_1),
+    getImageUrl(page.value.acf.kartinka_2),
+    getImageUrl(page.value.acf.kartinka_3),
+  ]);
+
+  aboutBlockObject.value = {
+    text: page.value.acf.opisanie_o_kompanii,
+    items: [
+      {
+        title: page.value.acf.zagolovok_1,
+        text: page.value.acf.opisanie_1,
+        image: img1,
+      },
+      {
+        title: page.value.acf.zagolovok_2,
+        text: page.value.acf.opisanie_2,
+        image: img2,
+      },
+      {
+        title: page.value.acf.zagolovok_3,
+        text: page.value.acf.opisanie_3,
+        image: img3,
+      }
+    ]
+  };
+}
+
+
+
+async function getSpecialist(id) {
+  if (!id) return null;
+  try {
+    const res = await $fetch(`${apiStore.apiUrl}specialist/${id}?_embed`);
+    return res;
+  } catch (error) {
+    console.error("Ошибка при получении специалиста:", error);
+    return null;
+  }
+}
+
+async function prepareSpecialistsBlock() {
+  if (!page.value?.acf?.specialists?.length) return;
+
+  const specialistsData = await Promise.all(
+    page.value.acf.specialists.map(({ specialist }) => getSpecialist(specialist))
+  );
+
+  specialistsBlockObject.value = {
+    title: page.value.acf.zagolovok_4,
+    text: page.value.acf.opisanie_4,
+    specialists: specialistsData.filter(Boolean),
+  };
+}
+await prepareSpecialistsBlock();
+await prepareAboutBlock();
+
+
+onMounted(() => {
+  console.log('aboutpage', page.value);
+});
 </script>
 
 <template>
   <TitleBlock title="О компании" />
   <Breadcrumbs />
-  <AboutBlock />
-  <SpecialistsBlock />
+  <AboutBlock v-if="aboutBlockObject" :aboutBlockObject="aboutBlockObject" />
+  <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
 </template>
 
 <style>

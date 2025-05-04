@@ -1,32 +1,34 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { usePosts } from '~/composables/usePosts.js'
 import TitleBlock from "~/components/common/TitleBlock.vue";
 import Breadcrumbs from "~/components/common/Breadcrumbs.vue";
+import { useApiStore } from '~/stores/api'
 
-const route = useRoute()
-const posts = usePosts()
-const post = posts.find(p => p.id === route.params.id)
+const apiStore = useApiStore()
+const route = useRoute();
 
+const { data: postData } = await useAsyncData('post', () =>
+  $fetch(`${apiStore.apiUrl}posts?slug=${route.params.id}&_embed`)
+);
+
+const post = computed(() => postData.value?.[0] || null);
 </script>
+
 <template>
-  <TitleBlock :title="post.title" />
+  <TitleBlock :title="post?.title.rendered" />
   <Breadcrumbs />
-  <div class="post" v-if="post">
+  <div v-if="post" class="post">
     <div class="container">
-      <img :src="post.img" :alt="post.title" />
-      <h2>{{ post.title }}</h2>
-      <div v-html="post.text" class="post__text"></div>
-      <div v-if="post.text2" v-html="post.text2" class="post__text"></div>
+      <img :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
+      <h2>{{ post.title.rendered }}</h2>
+      <div v-html="post.content.rendered" class="post__text"></div>
+      <div v-if="post.acf?.text2" v-html="post.acf.text2" class="post__text"></div>
     </div>
-  </div>
-  <div v-else>
-    <p>Пост не найден</p>
   </div>
 </template>
 
 
-<style lang="sass" scoped>
+<style lang="sass">
 img
   max-width: 100%
   width: 100%
@@ -35,12 +37,17 @@ img
 .post
   padding-bottom: 100px
   &__text
-    padding: 20px 0
     display: flex
     flex-direction: column
     gap: 15px
-    border-bottom: 1px solid #96C1C3
     font-size: 22px
     line-height: 130%
     color: #181818
+    hr
+      background: #96C1C3
+      height: 1px
+      width: 100%
+      display: block
+      margin: 20px 0
+  
 </style>
