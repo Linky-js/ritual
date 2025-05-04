@@ -19,12 +19,10 @@
       </div>
     </div>
   </div>
-  <ModalCall />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import ModalCall from '~/components/common/ModalCall.vue'
 
 const inputValue = ref('')
 const inputPassword = ref('')

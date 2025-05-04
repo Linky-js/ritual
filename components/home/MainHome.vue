@@ -1,4 +1,7 @@
 <script setup>
+import { ref } from 'vue'
+import ModalCall from '../common/ModalCall.vue'
+
 import bgmain from '../../assets/img/bg-main.jpg'
 
 const props = defineProps({
@@ -10,6 +13,12 @@ const props = defineProps({
   }
 }
 )
+
+const showModal = ref(false)
+
+const openModal = () => {
+  showModal.value = true
+}
 </script>
 <template>
   <div class="main" :style="{ background: `url(${bgmain}) center top / cover no-repeat` }">
@@ -19,10 +28,11 @@ const props = defineProps({
       </h2>
       <div class="main__btns">
         <a href="#" class="btn"><span>{{ mainHomeObject.buttonLeft }}</span></a>
-        <a href="#" class="btn-border"><span>{{ mainHomeObject.buttonRight }}</span></a>
+        <a class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span></a>
       </div>
     </div>
   </div>
+  <ModalCall v-if="showModal" @close="showModal = false" />
 </template>
 <style lang="sass" scoped>
 .main
