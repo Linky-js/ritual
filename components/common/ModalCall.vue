@@ -332,7 +332,6 @@ async function onSubmit() {
   </div>
 </template>
 
-
 <style lang="sass" scoped>
 .modal
   position: fixed

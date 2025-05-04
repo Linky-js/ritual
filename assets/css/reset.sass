@@ -321,7 +321,24 @@ body
 .box-input
   width: 100%
   position: relative
-  
+  input::placeholder
+    color:#fff !important
+
+  // Для Safari
+  input::-webkit-input-placeholder
+    color: #fff !important
+
+  // Для Firefox
+  input::-moz-placeholder
+    color: #fff !important
+
+  // Для IE 10-11
+  input:-ms-input-placeholder
+    color: #fff !important
+
+  // Для Edge
+  input::-ms-input-placeholder
+    color: #fff !important
   input, textarea
     padding: 15px
     border: 1px solid #d7f2f3

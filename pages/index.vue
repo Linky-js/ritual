@@ -31,8 +31,8 @@ if (page.value?.acf?.klinety?.length) {
     page.value.acf.klinety.map((client) => getImageUrl(client.kartinka))
   );
   clientsArray.value = imageUrls.filter(Boolean);
-  console.log('clientsArray',clientsArray.value);
-  
+  console.log('clientsArray', clientsArray.value);
+
 }
 
 const mainHomeObject = computed(() =>
@@ -59,20 +59,17 @@ const expertiseObject = computed(() =>
   page.value ? {
     title: page.value.acf.zagolovok,
     subtitle: page.value.acf.fraza
-    
+
   } : null
 );
 
 onMounted(() => {
-  console.log('homepage',page.value);
+  console.log('homepage', page.value);
 });
 </script>
 <template>
-  <div>
-    <MainHome :mainHomeObject="mainHomeObject" />
-    <AboutHome :aboutHomeObject="aboutHomeObject"  />
-    <ServicesHome :servicesHomeObject="servicesHomeObject" />
-  </div>
+  <MainHome :mainHomeObject="mainHomeObject" />
+  <AboutHome :aboutHomeObject="aboutHomeObject" />
+  <ServicesHome :servicesHomeObject="servicesHomeObject" />
 </template>
-<style scoped>
-</style>
+<style scoped></style>
