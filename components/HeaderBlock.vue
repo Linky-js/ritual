@@ -13,7 +13,7 @@ import phoneSvg from '../assets/img/phone.svg'
       </div>
     </NuxtLink>
     <div class="header__menu">
-      <NuxtLink :to="'/'">О нас</NuxtLink>
+      <NuxtLink :to="'/about'">О нас</NuxtLink>
       <NuxtLink :to="'/'">Специалисты</NuxtLink>
       <NuxtLink :to="'/'">Материалы</NuxtLink>
       <NuxtLink :to="'/login'" class="btn"><span>Личный кабинет</span></NuxtLink>

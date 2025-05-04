@@ -103,7 +103,6 @@ const inputOrganization = ref('')
 const inputLevel = ref('')
 const inputDop = ref('')
 
-
 const fileInput = ref(null)
 const fileName = ref('')
 
