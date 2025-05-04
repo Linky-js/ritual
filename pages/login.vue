@@ -81,6 +81,16 @@ const login = async () => {
   </div>
 </template>
 
+<script setup>
+import { ref } from 'vue'
+
+const inputValue = ref('')
+const inputPassword = ref('')
+const inputRef = ref()
+
+
+
+</script>
 
 <style lang="sass" scoped>
 .container
