@@ -1,4 +1,4 @@
-<template>
+git <template>
   <div class="spec__item">
     <div class="spec__item-img">
       <img :src="img" :alt="name">
