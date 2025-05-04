@@ -30,7 +30,7 @@ function getBreadcrumbLabel(part) {
   const map = {
     about: 'О компании',
     specialists: 'Специалисты',
-    information_materials: 'Информационные материалы'
+    news: 'Информационные материалы'
   }
 
   return map[part] || part.charAt(0).toUpperCase() + part.slice(1)
