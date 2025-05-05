@@ -1,12 +1,17 @@
 <script setup>
-
+const props = defineProps({
+  coopBlockkObject: {
+    type: Object,
+    default: {}
+  }
+})
 </script>
 <template>
   <div class="coop">
     <div class="container">
-      <h2 class="head-h2">Сотрудничество</h2>
+      <h2 class="head-h2">{{ coopBlockkObject.title }}</h2>
       <div class="coop__text">
-        Альянс бальзамировщиков и специалистов ритуального сервиса приглашает к сотрудничеству компании, учебные центры, индивидуальных предпринимателей и самозанятых в сфере ритуальных услуг. 
+        {{ coopBlockkObject.text }}
       </div>
     </div>
   </div>

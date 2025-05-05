@@ -13,7 +13,7 @@ defineProps<{
     </div>
     <div class="spec__item-text">
       <div class="spec__item-name">{{ name }}</div>
-      <div class="spec__item-desk">{{ description }}</div>
+      <div class="spec__item-desk" v-html="description"></div>
     </div>
   </div>
 </template>

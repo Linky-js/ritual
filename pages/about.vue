@@ -16,6 +16,8 @@ const { data: page } = await useAsyncData('aboutpage', () =>
 const clientsArray = ref([]);
 const aboutBlockObject = ref(null);
 const specialistsBlockObject = ref(null);
+const coopBlockkObject = ref(null);
+const companyBlockObject = ref(null);
 async function getImageUrl(id) {
   if (!id) return null;
   try {
@@ -82,10 +84,32 @@ async function prepareSpecialistsBlock() {
     title: page.value.acf.zagolovok_4,
     text: page.value.acf.opisanie_4,
     specialists: specialistsData.filter(Boolean),
+    dopText: page.value.acf.dop_zagolovok
+
   };
 }
+async function prepareCoopBlock() {
+
+  coopBlockkObject.value = {
+    title: page.value.acf.zagolovok_5,
+    text: page.value.acf.opisanie_5,
+  };
+}
+
+async function prepareCompanyBlock() {
+  if (!page.value?.acf?.kompanii) return [];
+
+  const imagePromises = page.value.acf.kompanii.map((kartinka) => getImageUrl(kartinka.kartinka));
+  const images = await Promise.all(imagePromises);
+
+  companyBlockObject.value = images.filter(Boolean);
+  console.log('companyBlockObject', companyBlockObject.value);
+  
+}
+await prepareCompanyBlock();
 await prepareSpecialistsBlock();
 await prepareAboutBlock();
+await prepareCoopBlock();
 
 
 onMounted(() => {
@@ -98,8 +122,8 @@ onMounted(() => {
   <Breadcrumbs />
   <AboutBlock v-if="aboutBlockObject" :aboutBlockObject="aboutBlockObject" />
   <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
-  <CoopBlock />
-  <CompanyBlock />
+  <CoopBlock :coopBlockkObject="coopBlockkObject" />
+  <CompanyBlock :companyBlockObject="companyBlockObject" />
 </template>
 
 <style>

@@ -12,7 +12,8 @@ const props = defineProps({
 <template>
   <div class="company">
     <div class="container">
-      <h2 class="head-h2">Компании с которыми мы сотрудничаем</h2>
+      <h2 class="head-h2">Реестр наших специалистов</h2>
+      <p></p>
       <div class="company__list">
         <Logotype v-for="logo in companyBlockObject" :key="logo.img" :img="logo" />
       </div>

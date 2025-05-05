@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 defineProps({
   img: {
     type: String,
@@ -24,6 +24,7 @@ defineProps({
   border: 2px solid #1B6265
   background: #fff
   padding: 12px
+  overflow: hidden
   img
     width: 100%
     height: auto

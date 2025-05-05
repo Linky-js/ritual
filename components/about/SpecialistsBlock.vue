@@ -1,6 +1,5 @@
 <script setup>
 import SpecItem from '~/components/common/SpecItem.vue'
-import def_spec from '~/assets/img/def-spec.jpg'
 
 const props = defineProps({
   specialistsBlockObject: {
@@ -8,49 +7,20 @@ const props = defineProps({
     default: {}
   }
 })
-const specialists = [
-  {
-    name: 'Наталья Иванова',
-    description: 'Психолог, стаж 10 лет',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-  {
-    name: 'Игорь Смирнов',
-    description: 'Ритуальный агент',
-    img: def_spec,
-  },
-]
 
-onMounted(() => {
-  console.log('specialistsBlockObject', props.specialistsBlockObject);
-  
-})
 </script>
 
 <template>
   <div class="spec">
     <div class="container">
       <div class="spec__head">
-        <h2 class="head-h2">Наши специалисты</h2>
-        <p>Специалисты, объединённые в альянс, отличаются тем, что проходят строгий отбор и придерживаются высоких
-          стандартов качества. Они регулярно повышают квалификацию, участвуют в обучающих программах и обмениваются
-          опытом с коллегами. Это позволяет им предоставлять более комплексные и качественные услуги. Наши специалисты
-          имеют поддержку сообщества и возможность совместной работы над особыми запросами.</p>
+        <h2 class="head-h2">{{ specialistsBlockObject.title }}</h2>
+        <p>{{ specialistsBlockObject.text }}</p>
       </div>
-      <div class="spec__title2">Клиенты могут быть уверены, что получат чуткое и профессиональное сопровождение</div>
+      <div class="spec__title2">{{ specialistsBlockObject.dopText }}</div>
       <div class="spec__list">
-        <SpecItem v-for="(spec, index) in specialists" :key="index" :name="spec.name" :description="spec.description"
-          :img="spec.img" />
+        <SpecItem v-for="(spec, index) in specialistsBlockObject.specialists" :key="index" :name="spec.title.rendered" :description="spec.excerpt.rendered"
+          :img="spec._embedded['wp:featuredmedia'][0].source_url" />
 
       </div>
       <div class="spec__btn">

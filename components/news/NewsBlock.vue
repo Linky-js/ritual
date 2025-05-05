@@ -60,7 +60,6 @@ onMounted(() => {
   background: #fff
   display: flex
   align-items: center
-  justify-content: flex-start
   flex-direction: column
   transition: .3s all
   position: relative
@@ -76,7 +75,6 @@ onMounted(() => {
     height: 234px
     object-fit: cover
     margin-bottom: 20px
-    margin-top: 0
   h3
     font-weight: 600
     font-size: 24px
