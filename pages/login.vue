@@ -31,7 +31,7 @@ const login = async () => {
     cookie.value = token;
 
     // Перенаправление
-    // router.push("/account");
+    router.push("/account");
   } catch (e) {
     errorMsg.value = "Неверный логин или пароль";
     console.error("Ошибка входа:", e);

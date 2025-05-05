@@ -52,7 +52,7 @@ const specialists = [
         <SpecItem v-for="(item, index) in specialists" :key="index" :name="item.name" :img="item.img" :description="item.description" />
       </div>
       <div class="spechome__btn">
-        <NuxtLink to="/specialists" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
+        <NuxtLink to="/" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
       </div>
     </div>
   </div>

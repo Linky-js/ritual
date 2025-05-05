@@ -1,6 +1,5 @@
 <script setup>
 import TitleMinBlock from "~/components/common/TitleMinBlock.vue";
-import img1 from "@/assets/img/post.jpg";
 
 const props = defineProps({
   newsList: {
@@ -22,7 +21,7 @@ onMounted(() => {
           v-for="(item, index) in newsList"
           :key="index"
           class="news__item"
-          :to="`/post/${item.slug}`"
+          :to="item.slug ? '/post/' + item.slug : ''"
         >
           <img
             :src="item._embedded['wp:featuredmedia'][0].source_url"

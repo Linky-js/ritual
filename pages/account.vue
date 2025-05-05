@@ -1,25 +1,6 @@
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from "vue";
-import IMask from 'imask'
-
-const inputName = ref("");
-const inputEmail = ref("");
-const inputPhone = ref("");
-const inputCity = ref("");
-const inputWork = ref("");
-const inputOrganization = ref("");
-const inputLevel = ref("");
-const inputDop = ref("");
-const successForm = ref(false);
-const phoneRef = ref(null);
-onMounted(() => {
-  if (phoneRef.value) {
-    IMask(phoneRef.value, {
-      mask: '+{7} (000) 000-00-00',
-      lazy: false,
-    })
-  }
-});
+import { onMounted, ref } from "vue"
+import { useCookie } from "#app"
 
 
 const activeTab = ref(0)
@@ -43,6 +24,130 @@ const matList = [
     title: 'Название Название'
   },
 ]
+import defaultAvatar from "~/assets/img/def-spec.jpg"
+
+const readOnly = ref(true)
+const inputName = ref("")
+const inputPhone = ref("")
+const inputCity = ref("")
+const inputWork = ref("")
+const inputOrganization = ref("")
+const inputLevel = ref("")
+const inputDop = ref("")
+const successForm = ref(false)
+const srcPhoto = ref(null)
+const phoneRef = ref(null)
+const fileName = ref("")
+const mediaId = ref(null)
+
+const authToken = useCookie("auth_token")
+
+onMounted(async () => {
+  if (!authToken.value) return
+
+  try {
+    const user = await $fetch("https://abisrs.ru/wordpress/wp-json/wp/v2/users/me", {
+      headers: {
+        Authorization: `Bearer ${authToken.value}`,
+      },
+    })
+
+    console.log("USER", user)
+
+    inputName.value = user.name || ""
+    inputPhone.value = user.meta?.phone || ""
+    inputCity.value = user.meta?.city || ""
+    inputWork.value = user.meta?.occupation || ""
+    inputOrganization.value = user.meta?.organization || ""
+    inputLevel.value = user.meta?.level || ""
+    inputDop.value = user.meta?.extra_info || ""
+    srcPhoto.value = user.meta.user_avatar_url || defaultAvatar
+
+  } catch (err) {
+    console.error("Ошибка получения профиля:", err)
+  }
+})
+const uploadAvatar = async (file) => {
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("title", file.name)
+
+  try {
+    const uploaded = await $fetch("https://abisrs.ru/wordpress/wp-json/wp/v2/media", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken.value}`,
+      },
+      body: formData,
+    })
+
+    return uploaded.id // ID медиафайла
+  } catch (err) {
+    console.error("Ошибка загрузки изображения:", err)
+    return null
+  }
+}
+const onFileChange = async (e) => {
+  const file = e.target.files[0]
+  fileName.value = file.name
+  if (!file || !authToken.value) return
+
+  mediaId.value = await uploadAvatar(file)
+  if (mediaId.value) {
+    // Обновим meta поле
+    await $fetch("https://abisrs.ru/wordpress/wp-json/wp/v2/users/me", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken.value}`,
+        "Content-Type": "application/json",
+      },
+      body: {
+        meta: {
+          user_avatar: mediaId.value,
+        },
+      },
+    })
+
+    // Получаем URL изображения
+    const media = await $fetch(`https://abisrs.ru/wordpress/wp-json/wp/v2/media/${mediaId.value}`)
+    srcPhoto.value = media.source_url
+  }
+}
+
+const saveAcc = async () => {
+  if (!authToken.value) return
+
+  try {
+    const body = {
+      name: inputName.value,
+      meta: {
+        phone: inputPhone.value,
+        city: inputCity.value,
+        occupation: inputWork.value,
+        organization: inputOrganization.value,
+        level: inputLevel.value,
+        extra_info: inputDop.value,
+        user_avatar: mediaId.value
+      },
+    }
+
+    await $fetch("https://abisrs.ru/wordpress/wp-json/wp/v2/users/me", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authToken.value}`,
+        "Content-Type": "application/json",
+      },
+      body,
+    })
+
+    successForm.value = true
+    readOnly.value = true
+  } catch (err) {
+    console.error("Ошибка сохранения профиля:", err)
+  }
+}
+
+
 
 </script>
 <template>
@@ -65,8 +170,8 @@ const matList = [
           <form class="acc__list">
             <div class="acc__box">
               <div class="box-avatar">
-                <img src="~/assets/img/def-spec.jpg" alt="avatar" />
-                <input type="file" id="photo" @change="onFileChange" hidden class="hidden-input" required />
+                <img :src="srcPhoto ? srcPhoto : defaultAvatar" alt="avatar" />
+                <input :readonly="readOnly" type="file" id="photo" @change="onFileChange" hidden class="hidden-input" required />
                 <label for="photo">
                   Загрузить фото
                 </label>
@@ -74,83 +179,39 @@ const matList = [
               <div class="acc__box-list">
                 <div class="acc__box-i">
                   <div class="box-input">
-                    <input v-model="inputName" type="text" id="name" placeholder=" " ref="inputRef" required />
+                    <input :readonly="readOnly" v-model="inputName" type="text" id="name" placeholder=" " ref="inputRef" required />
                     <label :class="{ hidden: inputName.trim() !== '' }" for="name">ФИО</label>
                   </div>
                   <div class="box-input">
-                    <input v-model="inputEmail" type="text" id="email" placeholder=" " ref="inputRef" required />
-                    <label :class="{ hidden: inputEmail.trim() !== '' }" for="email">Email</label>
-                  </div>
-                </div>
-                <div class="acc__box-i">
-                  <div class="box-input">
-                    <input v-model="inputPhone" type="text" id="phone" placeholder=" " ref="phoneRef" required />
-                    <label :class="{ hidden: inputPhone.trim() !== '' }" for="phone">Номер телефона</label>
-                  </div>
-                  <div class="box-input">
-                    <input v-model="inputCity" type="text" id="city" placeholder=" " ref="inputRef" required />
-                    <label :class="{ hidden: inputCity.trim() !== '' }" for="city">Город</label>
-                  </div>
-                </div>
-                <div class="acc__box-i">
-                  <div class="box-input">
-                    <input v-model="inputWork" type="text" id="work" placeholder=" " ref="inputRef" required />
-                    <label :class="{ hidden: inputWork.trim() !== '' }" for="work">Род деятельности</label>
-                  </div>
-                  <div class="box-image">
-                    <input type="file" id="photo" @change="onFileChange" hidden class="hidden-input" required />
-                    <label for="photo">
-                      <svg width="38" height="37" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M2.35 22.2001C2.84065 22.2001 3.31121 22.395 3.65815 22.7419C4.00509 23.0889 4.2 23.5594 4.2 24.0501V31.4501C4.2 31.9407 4.39491 32.4113 4.74185 32.7582C5.0888 33.1052 5.55935 33.3001 6.05 33.3001H31.95C32.4407 33.3001 32.9112 33.1052 33.2581 32.7582C33.6051 32.4113 33.8 31.9407 33.8 31.4501V24.0501C33.8 23.5594 33.9949 23.0889 34.3419 22.7419C34.6888 22.395 35.1594 22.2001 35.65 22.2001C36.1407 22.2001 36.6112 22.395 36.9581 22.7419C37.3051 23.0889 37.5 23.5594 37.5 24.0501V31.4501C37.5 32.922 36.9153 34.3337 35.8744 35.3745C34.8336 36.4154 33.422 37.0001 31.95 37.0001H6.05C4.57805 37.0001 3.16638 36.4154 2.12556 35.3745C1.08473 34.3337 0.5 32.922 0.5 31.4501V24.0501C0.5 23.5594 0.69491 23.0889 1.04185 22.7419C1.38879 22.395 1.85935 22.2001 2.35 22.2001ZM17.6921 0.542143C18.039 0.195322 18.5094 0.000488281 19 0.000488281C19.4906 0.000488281 19.961 0.195322 20.3079 0.542143L29.558 9.79214C29.8949 10.1411 30.0814 10.6084 30.0772 11.0934C30.073 11.5785 29.8784 12.0425 29.5354 12.3855C29.1924 12.7285 28.7284 12.9231 28.2433 12.9273C27.7583 12.9315 27.291 12.745 26.942 12.408L19 4.46599L11.058 12.408C10.709 12.745 10.2417 12.9315 9.75666 12.9273C9.27159 12.9231 8.80759 12.7285 8.46459 12.3855C8.12158 12.0425 7.92702 11.5785 7.9228 11.0934C7.91859 10.6084 8.10506 10.1411 8.44205 9.79214L17.6921 0.542143Z"
-                          fill="black" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M2.35 22.2001C2.84065 22.2001 3.31121 22.395 3.65815 22.7419C4.00509 23.0889 4.2 23.5594 4.2 24.0501V31.4501C4.2 31.9407 4.39491 32.4113 4.74185 32.7582C5.0888 33.1052 5.55935 33.3001 6.05 33.3001H31.95C32.4407 33.3001 32.9112 33.1052 33.2581 32.7582C33.6051 32.4113 33.8 31.9407 33.8 31.4501V24.0501C33.8 23.5594 33.9949 23.0889 34.3419 22.7419C34.6888 22.395 35.1594 22.2001 35.65 22.2001C36.1407 22.2001 36.6112 22.395 36.9581 22.7419C37.3051 23.0889 37.5 23.5594 37.5 24.0501V31.4501C37.5 32.922 36.9153 34.3337 35.8744 35.3745C34.8336 36.4154 33.422 37.0001 31.95 37.0001H6.05C4.57805 37.0001 3.16638 36.4154 2.12556 35.3745C1.08473 34.3337 0.5 32.922 0.5 31.4501V24.0501C0.5 23.5594 0.69491 23.0889 1.04185 22.7419C1.38879 22.395 1.85935 22.2001 2.35 22.2001ZM17.6921 0.542143C18.039 0.195322 18.5094 0.000488281 19 0.000488281C19.4906 0.000488281 19.961 0.195322 20.3079 0.542143L29.558 9.79214C29.8949 10.1411 30.0814 10.6084 30.0772 11.0934C30.073 11.5785 29.8784 12.0425 29.5354 12.3855C29.1924 12.7285 28.7284 12.9231 28.2433 12.9273C27.7583 12.9315 27.291 12.745 26.942 12.408L19 4.46599L11.058 12.408C10.709 12.745 10.2417 12.9315 9.75666 12.9273C9.27159 12.9231 8.80759 12.7285 8.46459 12.3855C8.12158 12.0425 7.92702 11.5785 7.9228 11.0934C7.91859 10.6084 8.10506 10.1411 8.44205 9.79214L17.6921 0.542143Z"
-                          fill="url(#paint0_linear_183_216)" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M19.0004 0C19.491 0 19.9616 0.19491 20.3085 0.541852C20.6555 0.888795 20.8504 1.35935 20.8504 1.85V24.05C20.8504 24.5407 20.6555 25.0112 20.3085 25.3581C19.9616 25.7051 19.491 25.9 19.0004 25.9C18.5097 25.9 18.0392 25.7051 17.6922 25.3581C17.3453 25.0112 17.1504 24.5407 17.1504 24.05V1.85C17.1504 1.35935 17.3453 0.888795 17.6922 0.541852C18.0392 0.19491 18.5097 0 19.0004 0Z"
-                          fill="black" />
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                          d="M19.0004 0C19.491 0 19.9616 0.19491 20.3085 0.541852C20.6555 0.888795 20.8504 1.35935 20.8504 1.85V24.05C20.8504 24.5407 20.6555 25.0112 20.3085 25.3581C19.9616 25.7051 19.491 25.9 19.0004 25.9C18.5097 25.9 18.0392 25.7051 17.6922 25.3581C17.3453 25.0112 17.1504 24.5407 17.1504 24.05V1.85C17.1504 1.35935 17.3453 0.888795 17.6922 0.541852C18.0392 0.19491 18.5097 0 19.0004 0Z"
-                          fill="url(#paint1_linear_183_216)" />
-                        <defs>
-                          <linearGradient id="paint0_linear_183_216" x1="19" y1="0.000488281" x2="19" y2="37.0001"
-                            gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#59ABAF" />
-                            <stop offset="1" stop-color="#10595C" />
-                          </linearGradient>
-                          <linearGradient id="paint1_linear_183_216" x1="19.0004" y1="0" x2="19.0004" y2="25.9"
-                            gradientUnits="userSpaceOnUse">
-                            <stop stop-color="#59ABAF" />
-                            <stop offset="1" stop-color="#10595C" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
-                      <p>{{ fileName || "Удоств. о квалификации" }}</p>
-                    </label>
-                  </div>
-                </div>
-                <div class="acc__box-i">
-                  <div class="box-input">
-                    <input v-model="inputOrganization" type="text" id="organization" placeholder=" " ref="inputRef" />
+                    <input :readonly="readOnly" v-model="inputOrganization" type="text" id="organization" placeholder=" " ref="inputRef" />
                     <label :class="{ hidden: inputOrganization.trim() !== '' }" for="organization">Наименование
                       организации</label>
                   </div>
                   <div class="box-input">
-                    <input v-model="inputLevel" type="text" id="level" placeholder=" " ref="inputRef" />
-                    <label :class="{ hidden: inputLevel.trim() !== '' }" for="level">Уровень вступления</label>
+                    <input :readonly="readOnly" v-model="inputWork" type="text" id="work" placeholder=" " ref="inputRef" required />
+                    <label :class="{ hidden: inputWork.trim() !== '' }" for="work">Род деятельности</label>
+                  </div>
+                </div>
+                <div class="acc__box-i">
+                  <div class="box-input">
+                    <input :readonly="readOnly" v-model="inputPhone" type="text" id="phone" placeholder=" " ref="phoneRef" required />
+                    <label :class="{ hidden: inputPhone.trim() !== '' }" for="phone">Номер телефона</label>
+                  </div>
+                  <div class="box-input">
+                    <input :readonly="readOnly" v-model="inputCity" type="text" id="city" placeholder=" " ref="inputRef" required />
+                    <label :class="{ hidden: inputCity.trim() !== '' }" for="city">Город</label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="box-input box-input__textarea">
-              <textarea v-model="inputDop" name="dop" id="dop" cols="30"></textarea>
+              <textarea :readonly="readOnly" v-model="inputDop" name="dop" id="dop" cols="30"></textarea>
               <label :class="{ hidden: inputDop.trim() !== '' }" for="dop">Дополнительная информация о себе</label>
             </div>
           </form>
           <div class="acc__btns">
-            <button class="btn"><span>Редактировать</span></button>
-            <button class="btn"><span>Сохранить</span></button>
+            <button class="btn" v-show="readOnly" @click="readOnly = false"><span>Редактировать</span></button>
+            <button class="btn" @click="saveAcc"><span>Сохранить</span></button>
           </div>
         </div>
         <div v-show="activeTab === 1" class="acc__slide">

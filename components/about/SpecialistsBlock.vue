@@ -24,7 +24,7 @@ const props = defineProps({
 
       </div>
       <div class="spec__btn">
-        <NuxtLink :to="'/specialists'" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
+        <NuxtLink :to="'/'" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
       </div>
     </div>
   </div>

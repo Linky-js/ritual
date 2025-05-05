@@ -1,6 +1,18 @@
 <script setup>
 import logo from '../assets/img/logo.svg'
 import phoneSvg from '../assets/img/phone.svg'
+import { useCookie } from "#app";
+const linkAcc = ref(null);
+
+onMounted(() => {
+  let acc = useCookie("auth_token");
+  if (acc.value) {
+    linkAcc.value = '/account';
+  } else {
+    linkAcc.value = '/login';
+  }
+})
+
 
 </script>
 <template>
@@ -16,7 +28,7 @@ import phoneSvg from '../assets/img/phone.svg'
       <NuxtLink :to="'/about'">О нас</NuxtLink>
       <NuxtLink :to="'/'">Специалисты</NuxtLink>
       <NuxtLink :to="'/news'">Материалы</NuxtLink>
-      <NuxtLink :to="'/account'" class="btn"><span>Личный кабинет</span></NuxtLink>
+      <NuxtLink :to="linkAcc" class="btn"><span>Личный кабинет</span></NuxtLink>
       <NuxtLink :to="'tel:+79990091560'" class="header__phone"><img :src="phoneSvg" alt="">+7 (999) 009-15-60</NuxtLink>
     </div>
   </div>
