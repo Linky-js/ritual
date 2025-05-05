@@ -11,6 +11,7 @@ const inputOrganization = ref("");
 const inputLevel = ref("");
 const inputDop = ref("");
 const successForm = ref(false);
+const phoneRef = ref(null);
 
 const emit = defineEmits(["close"]);
 const modalContentRef = ref(null);
@@ -182,7 +183,7 @@ async function onSubmit() {
             type="text"
             id="phone"
             placeholder=" "
-            ref="inputRef"
+            ref="phoneRef"
             required
           />
           <label :class="{ hidden: inputPhone.trim() !== '' }" for="phone"
