@@ -16,7 +16,7 @@ import phoneSvg from '../assets/img/phone.svg'
       <NuxtLink :to="'/about'">О нас</NuxtLink>
       <NuxtLink :to="'/'">Специалисты</NuxtLink>
       <NuxtLink :to="'/news'">Материалы</NuxtLink>
-      <NuxtLink :to="'/login'" class="btn"><span>Личный кабинет</span></NuxtLink>
+      <NuxtLink :to="'/account'" class="btn"><span>Личный кабинет</span></NuxtLink>
       <NuxtLink :to="'tel:+79990091560'" class="header__phone"><img :src="phoneSvg" alt="">+7 (999) 009-15-60</NuxtLink>
     </div>
   </div>
@@ -64,6 +64,7 @@ $base2: #196064
     line-height: 130%
     img
       height: 2cap
+      width: auto
     &:hover
       color: $base2
     &::after
