@@ -3,6 +3,8 @@ import TitleBlock from "~/components/common/TitleBlock.vue";
 import Breadcrumbs from "~/components/common/Breadcrumbs.vue";
 import AboutBlock from "~/components/about/AboutBlock.vue";
 import SpecialistsBlock from "~/components/about/SpecialistsBlock.vue";
+import CoopBlock from "~/components/about/CoopBlock.vue";
+import CompanyBlock from "~/components/about/CompanyBlock.vue";
 import { useApiStore } from '~/stores/api'
 
 const apiStore = useApiStore()
@@ -96,6 +98,8 @@ onMounted(() => {
   <Breadcrumbs />
   <AboutBlock v-if="aboutBlockObject" :aboutBlockObject="aboutBlockObject" />
   <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
+  <CoopBlock />
+  <CompanyBlock />
 </template>
 
 <style>

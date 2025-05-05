@@ -2,6 +2,7 @@
 import MainHome from "~/components/home/MainHome.vue";
 import AboutHome from "~/components/home/AboutHome.vue";
 import ServicesHome from "~/components/home/ServicesHome.vue";
+import SpecialistsHome from "~/components/home/SpecialistsHome.vue";
 import { ref, watch, onMounted } from "vue";
 import { useApiStore } from '~/stores/api'
 
@@ -71,5 +72,6 @@ onMounted(() => {
   <MainHome :mainHomeObject="mainHomeObject" />
   <AboutHome :aboutHomeObject="aboutHomeObject" />
   <ServicesHome :servicesHomeObject="servicesHomeObject" />
+  <SpecialistsHome :clientsArray="clientsArray" :expertiseObject="expertiseObject" />
 </template>
 <style scoped></style>
