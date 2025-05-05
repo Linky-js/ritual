@@ -19,7 +19,7 @@ const post = computed(() => postData.value?.[0] || null);
   <Breadcrumbs />
   <div v-if="post" class="post">
     <div class="container">
-      <img :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
+      <img class="postImg" :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
       <h2>{{ post.title.rendered }}</h2>
       <div v-html="post.content.rendered" class="post__text"></div>
       <div v-if="post.acf?.text2" v-html="post.acf.text2" class="post__text"></div>
@@ -29,7 +29,7 @@ const post = computed(() => postData.value?.[0] || null);
 
 
 <style lang="sass">
-img
+.postImg
   max-width: 100%
   width: 100%
   height: auto

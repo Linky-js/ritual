@@ -47,6 +47,9 @@ const levelList = [
   },
 ]
 const showModal = ref(false)
+const openModal = () => {
+  showModal.value = true
+}
 </script>
 <template>
   <div class="level">
@@ -64,12 +67,12 @@ const showModal = ref(false)
         </div>
         <div class="level__item-price">{{ item.price }}</div>
         <div class="level__btn">
-          <a class="btn btn-call" @click="showModal = true"><span>Вступить</span></a>
+          <a class="btn btn-call" @click="openModal = true"><span>Вступить</span></a>
         </div>
       </div>
     </div>
   </div>
-  <!-- <ModalCall :showModal="showModal" @close="showModal = false" /> -->
+  <ModalCall v-if="showModal" @close="showModal = false" />
 </template>
 <style lang="sass" scoped>
 .level

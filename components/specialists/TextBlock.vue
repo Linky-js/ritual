@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup>
 import bgimg from "~/assets/img/bg-spec-big.png";
 </script>
 <template>

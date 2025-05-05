@@ -1,5 +1,6 @@
 <script setup>
 import bgimg from "~/assets/img/bg-spec.png";
+const img1 = bgimg
 </script>
 <template>
   <div class="top">
@@ -7,7 +8,7 @@ import bgimg from "~/assets/img/bg-spec.png";
       <h2 class="head"><span>Стать частью АБИСРС</span></h2>
       <p>Альянс бальзамировщиков и специалистов ритуального сервиса представляет собой уникальную платформу, которая объединяет профессионалов, стремящихся к повышению стандартов своей деятельности. </p>
     </div>
-    <div class="top__item" :style="{ backgroundImage: `url(${bgimg})` }">
+    <div class="top__item" :style="{ backgroundImage: `url(${img1})` }">
       <div class="container">
         <p>Присоединяясь к альянсу каждый специалист получает возможность быть частью сообщества, которое ценит качество и этику в своей работе — таких важных аспектов, делающих нашу профессию достойной и необходимой в обществе.</p>
       </div>

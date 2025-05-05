@@ -1,6 +1,13 @@
 <script  setup>
 import img from '../../assets/img/def-spec.jpg'
 import SpecItem from '~/components/common/SpecItem.vue'
+
+const props = defineProps({
+  specialistsBlockObject: {
+    type: Object,
+    default: {}
+  }
+})
 const specialists = [
   {
     name: 'Наталья Иванова',
@@ -44,15 +51,18 @@ const specialists = [
   },
 
 ]
+
+
 </script>
 <template>
   <div class="spechome">
     <div class="container">
       <div class="spechome__list">
-        <SpecItem v-for="(item, index) in specialists" :key="index" :name="item.name" :img="item.img" :description="item.description" />
+        <SpecItem v-for="(spec, index) in specialistsBlockObject.specialists" :key="index" :name="spec.title.rendered" :description="spec.excerpt.rendered"
+          :img="spec._embedded['wp:featuredmedia'][0].source_url" />
       </div>
       <div class="spechome__btn">
-        <NuxtLink to="/" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
+        <NuxtLink to="/specialists" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
       </div>
     </div>
   </div>

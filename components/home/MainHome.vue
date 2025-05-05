@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import ModalCall from '../common/ModalCall.vue'
 
 import bgmain from '../../assets/img/bg-main.jpg'
+import { NuxtLink } from '#components'
 
 const props = defineProps({
   mainHomeObject: {
@@ -27,8 +28,8 @@ const openModal = () => {
         <span v-html="mainHomeObject.title"></span>
       </h2>
       <div class="main__btns">
-        <a href="#" class="btn"><span>{{ mainHomeObject.buttonLeft }}</span></a>
-        <a class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span></a>
+        <NuxtLink to="/specialists" class="btn"><span>{{ mainHomeObject.buttonLeft }}</span></NuxtLink>
+        <NuxtLink class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span></NuxtLink>
       </div>
     </div>
   </div>
