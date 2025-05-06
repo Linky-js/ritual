@@ -3,7 +3,7 @@
 import Logotype from '../common/Logotype.vue';
 
 const props = defineProps({
-  companyBlockObject: {
+  reestrBlockObject: {
     type: Array,
     default: []
   }
@@ -15,7 +15,7 @@ const props = defineProps({
       <h2 class="head-h2">Реестр наших специалистов</h2>
       <p>Реестр служит надежным источником информации о квалифицированных специалистах, их опыте и компетенциях, что позволяет людям в трудный момент сделать осознанный выбор и доверить важную миссию настоящим профессионалам.</p>
       <div class="company__list">
-        <Logotype v-for="logo in companyBlockObject" :key="logo.img" :img="logo" />
+        <Logotype v-for="logo in reestrBlockObject.kartinki" :key="logo.img" :img="logo" />
       </div>
       <div class="company__btn">
         <NuxtLink to="/reestr" class="btn"><span>Присоединиться к АБИСРС как специалист</span></NuxtLink>

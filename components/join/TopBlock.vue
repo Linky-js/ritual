@@ -1,26 +1,29 @@
 <script setup>
 import bgimg from "~/assets/img/bg-spec.png";
+
+const props = defineProps({
+  topBlockObject: {
+    type: Object,
+    default: {}
+  }
+})
 const img1 = bgimg
 </script>
 <template>
   <div class="top">
     <div class="container top__top">
-      <h2 class="head"><span>Стать частью АБИСРС</span></h2>
-      <p>Альянс бальзамировщиков и специалистов ритуального сервиса представляет собой уникальную платформу, которая
-        объединяет профессионалов, стремящихся к повышению стандартов своей деятельности. </p>
+      <h2 class="head"><span>{{topBlockObject.title}}</span></h2>
+      <p>{{topBlockObject.text}}</p>
     </div>
-    <div class="top__item" :style="{ backgroundImage: `url(${img1})` }">
+    <div class="top__item" :style="{ backgroundImage: `url(${topBlockObject.photo})` }">
       <div class="container">
-        <p>Присоединяясь к альянсу каждый специалист получает возможность быть частью сообщества, которое ценит качество
-          и этику в своей работе — таких важных аспектов, делающих нашу профессию достойной и необходимой в обществе.
+        <p>{{topBlockObject.dopText}}
         </p>
       </div>
     </div>
     <div class="top__bot">
       <div class="container">
-        <p>АБИСРС служит не только местом для обмена знаниями, но и площадкой для обсуждения актуальных вопросов отрасли
-          и внедрения лучших практик. В условиях постоянных изменений и роста требований клиентов критически важно быть
-          в курсе новинок и поддерживать высокий уровень профессионализма.</p>
+        <p>{{topBlockObject.dopText2}}</p>
       </div>
     </div>
   </div>
