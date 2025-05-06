@@ -48,6 +48,7 @@ const levelList = [
 ]
 const showModal = ref(false)
 const openModal = () => {
+  console.log('openModal')
   showModal.value = true
 }
 </script>
@@ -67,7 +68,7 @@ const openModal = () => {
         </div>
         <div class="level__item-price">{{ item.price }}</div>
         <div class="level__btn">
-          <a class="btn btn-call" @click="openModal = true"><span>Вступить</span></a>
+          <a class="btn btn-call" @click="openModal"><span>Вступить</span></a>
         </div>
       </div>
     </div>

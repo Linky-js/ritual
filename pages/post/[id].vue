@@ -32,7 +32,8 @@ const post = computed(() => postData.value?.[0] || null);
 .postImg
   max-width: 100%
   width: 100%
-  height: auto
+  height: 300px
+  object-fit: cover
   margin: 20px 0
 .post
   padding-bottom: 100px
@@ -49,5 +50,19 @@ const post = computed(() => postData.value?.[0] || null);
       width: 100%
       display: block
       margin: 20px 0
-  
+@media (max-width: 1024px)
+  .post
+    padding-bottom: 50px
+    &__text
+      font-size: 18px
+      line-height: 130%
+      hr
+        margin: 10px 0
+@media (max-width: 620px)
+  .post
+    padding-bottom: 30px
+    &__text
+      font-size: 16px
+  .postImg
+    height: 200px
 </style>

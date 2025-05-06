@@ -378,4 +378,38 @@ const saveAcc = async () => {
       transform: scale(1.03)
       h3 
         color: #96C1C3
+@media (max-width: 1440px)
+  .acc__box-i
+    max-width: 100%
+    .box-input
+      width: 100%
+      max-width: 100%
+@media (max-width: 1024px)
+  .acc
+    .container
+      flex-direction: column
+
+    &__side
+      flex-direction: row
+      max-width: 100%
+      &-item
+        width: 100%
+        text-align: center
+        justify-content: center
+  .mat__list
+    grid-template-columns: repeat(2, 1fr)
+@media (max-width: 620px)
+  .acc__side
+    flex-direction: column
+  .acc__side-item
+    font-size: 14px
+  .acc__box 
+    flex-direction: column
+  .mat__list
+    grid-template-columns: repeat(1, 1fr)
+  .mat__item
+    img 
+      height: 200px
+    h3
+      font-size: 18px
 </style>
