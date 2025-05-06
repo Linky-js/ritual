@@ -19,6 +19,7 @@ const aboutBlockObject = ref(null);
 const specialistsBlockObject = ref(null);
 const coopBlockkObject = ref(null);
 const companyBlockObject = ref(null);
+const reestrBlockObject = ref({});
 async function getImageUrl(id) {
   if (!id) return null;
   try {
@@ -104,14 +105,25 @@ async function prepareCompanyBlock() {
   const images = await Promise.all(imagePromises);
 
   companyBlockObject.value = images.filter(Boolean);
-  console.log('companyBlockObject', companyBlockObject.value);
   
+}
+
+async function prepareReestrBlock() {
+  if (!page.value?.acf?.reestr) return [];
+
+  const imagePromises = page.value.acf.reestr.map((kartinka) => getImageUrl(kartinka.kartinka));
+  const images = await Promise.all(imagePromises);
+
+  reestrBlockObject.value.kartinki = images.filter(Boolean);
+  reestrBlockObject.value.text = page.value.acf.opisanie_6;
+  reestrBlockObject.value.title = page.value.acf.zagolovok_7;
+  console.log('reestrBlockObject', reestrBlockObject.value);
 }
 await prepareCompanyBlock();
 await prepareSpecialistsBlock();
 await prepareAboutBlock();
 await prepareCoopBlock();
-
+await prepareReestrBlock();
 
 onMounted(() => {
   console.log('aboutpage', page.value);
@@ -125,7 +137,7 @@ onMounted(() => {
   <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
   <CoopBlock :coopBlockkObject="coopBlockkObject" />
   <CompanyBlock :companyBlockObject="companyBlockObject" />
-  <ReestrBlock />
+  <ReestrBlock :reestrBlockObject="reestrBlockObject" />
 </template>
 
 <style>
