@@ -13,6 +13,7 @@ const showModal = ref(false);
 const openModal = () => {
   showModal.value = true;
 };
+
 </script>
 <template>
   <div class="level">
@@ -36,9 +37,8 @@ const openModal = () => {
         </div>
         <div class="level__item-price">{{ item.price }}</div>
         <div class="level__btn">
-          <a class="btn btn-call" @click="openModal = true"
-            ><span>Вступить</span></a
-          >
+          <a class="btn btn-call" @click="openModal"><span>Вступить</span></a>
+
         </div>
       </div>
     </div>

@@ -32,7 +32,7 @@ onMounted(() => {
   if (phoneRef.value) {
     IMask(phoneRef.value, {
       mask: '+{7} (000) 000-00-00',
-      lazy: false,
+      lazy: true,
     })
   }
   document.addEventListener("click", handleClickOutside);
@@ -153,14 +153,14 @@ async function onSubmit() {
           <label :class="{ hidden: inputEmail.trim() !== '' }" for="email">Email</label>
         </div>
         <div class="box-input">
-          <input v-model="inputPhone" type="text" id="phone" placeholder=" " ref="phoneRef" required />
+          <input v-model="inputPhone" type="text" id="phone" ref="phoneRef" required />
           <label :class="{ hidden: inputPhone.trim() !== '' }" for="phone">Номер телефона</label>
         </div>
         <div class="box-input">
           <input v-model="inputCity" type="text" id="city" placeholder=" " ref="inputRef" required />
           <label :class="{ hidden: inputCity.trim() !== '' }" for="city">Город</label>
         </div>
-        <div class="box-input">
+        <div class="box-input box-input-work">
           <input v-model="inputWork" type="text" id="work" placeholder=" " ref="inputRef" required />
           <label :class="{ hidden: inputWork.trim() !== '' }" for="work">Род деятельности</label>
         </div>
@@ -196,12 +196,12 @@ async function onSubmit() {
             <p>{{ fileName || "Удоств. о квалификации" }}</p>
           </label>
         </div>
-        <div class="box-input">
+        <div class="box-input box-input-org">
           <input v-model="inputOrganization" type="text" id="organization" placeholder=" " ref="inputRef" />
           <label :class="{ hidden: inputOrganization.trim() !== '' }" for="organization">Наименование
             организации</label>
         </div>
-        <div class="box-input">
+        <div class="box-input box-input-level">
           <input v-model="inputLevel" type="text" id="level" placeholder=" " ref="inputRef" />
           <label :class="{ hidden: inputLevel.trim() !== '' }" for="level">Уровень вступления</label>
         </div>
@@ -238,7 +238,6 @@ async function onSubmit() {
   display: flex
   justify-content: center
   align-items: center
-
   &__content
     max-width: 1100px
     width: 100%
@@ -285,6 +284,8 @@ async function onSubmit() {
   width: 100%
   position: relative
 .check
+  grid-column: 1 / 3
+  width: 100%
   input
     position: absolute
     opacity: 0
@@ -292,6 +293,7 @@ async function onSubmit() {
     width: 0
     height: 0
   label
+    width: 100%
     display: flex
     align-items: center
     gap: 10px
@@ -334,12 +336,56 @@ async function onSubmit() {
     transition: .3s all
     cursor: pointer
     svg
-      width: 30px
-      height: 30px
+      width: 25px
+      height: 25px
       path
         transition: .3s all
     &:hover
       border-color: #196064
     p
       color: #b9b9b9
+@media (max-width: 1024px)
+  .modal__head
+    gap: 10px
+    h2
+      font-size: 25px
+    p
+      font-size: 16px
+  .box-image
+    label
+      font-size: 14px
+      svg 
+        width: 15px
+        height: 15px
+        flex-shrink: 0
+@media (max-width: 620px)
+  .modal__head
+    gap: 10px
+    h2
+      font-size: 20px
+    p
+      font-size: 14px
+  .modal 
+    overflow-y: scroll
+    height: 100%
+    background: #fff
+  .modal__content
+    padding: 30px 15px
+    height: 100%
+  .modal__close
+    right: 10px
+    top: 10px
+    svg
+      height: 20px
+      width: 20px
+  .modal 
+    padding: 0
+  .modal__form
+    gap: 10px
+  .box-image, .box-input-work, .box-input-org, .box-input-level
+    grid-column: 1 / 3
+  .check
+    label
+      p
+        font-size: 14px
 </style>

@@ -25,7 +25,7 @@ const login = async () => {
     );
 
     console.log("response", response);
-    
+
     const token = response.token;
     const cookie = useCookie("auth_token");
     cookie.value = token;
@@ -48,30 +48,12 @@ const login = async () => {
         </h2>
         <div class="login__form">
           <div class="box-input">
-            <input
-              v-model="inputValue"
-              type="text"
-              id="login"
-              placeholder=" "
-              ref="inputRef"
-            />
-            <label :class="{ hidden: inputValue.trim() !== '' }" for="login"
-              >Логин</label
-            >
+            <input v-model="inputValue" type="text" id="login" placeholder=" " ref="inputRef" />
+            <label :class="{ hidden: inputValue.trim() !== '' }" for="login">Логин</label>
           </div>
           <div class="box-input">
-            <input
-              v-model="inputPassword"
-              type="password"
-              id="password"
-              placeholder=" "
-              ref="inputRef"
-            />
-            <label
-              :class="{ hidden: inputPassword.trim() !== '' }"
-              for="password"
-              >Пароль</label
-            >
+            <input v-model="inputPassword" type="password" id="password" placeholder=" " ref="inputRef" />
+            <label :class="{ hidden: inputPassword.trim() !== '' }" for="password">Пароль</label>
           </div>
           <button class="btn" @click.prevent="login"><span>Вход</span></button>
           <p v-if="errorMsg" class="error">{{ errorMsg }}</p>
@@ -108,4 +90,15 @@ const login = async () => {
   flex-direction: column
   gap: 25px
   width: 100%
+@media (max-width: 1024px)
+  .login__head
+    font-size: 32px
+@media (max-width: 620px)
+  .login__head
+    font-size: 24px
+  .login__content 
+    padding: 40px
+    gap: 20px
+  .login__form
+    gap: 20px
 </style>
