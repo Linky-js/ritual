@@ -109,5 +109,27 @@ const joinList = [
       transform: scale(1.03)
       h3 
         color: #96C1C3
+@media (max-width: 1024px)
+  .join
+    padding-top: 60px
+  .join p 
+    font-size: 20px
+  .join__list
+    grid-template-columns: repeat(2, 1fr)
+    gap: 20px
+  .join__head
+    &-img
+      display: none
+@media (max-width: 620px)
+  .join p 
+    font-size: 16px
+  .join__list
+    grid-template-columns: repeat(1, 1fr)
+  .join__item
+    img
+      height: 250px
+      
+    h3
+      font-size: 18px
         
 </style>

@@ -38,4 +38,16 @@ const props = defineProps({
     line-height: 130%
     font-weight: 600
     text-align: center
+@media (max-width: 1600px)
+  .coop__text
+    font-size: 24px
+@media (max-width: 1024px)
+  .coop__text
+    font-size: 18px
+    padding: 24px
+@media (max-width: 620px)
+  .coop
+    padding-top: 60px
+  .coop__text
+    font-size: 14px
 </style>

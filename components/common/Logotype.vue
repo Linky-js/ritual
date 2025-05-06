@@ -28,5 +28,8 @@ defineProps({
   img
     width: 100%
     height: auto
-
+@media (max-width: 620px)
+  .logo
+    width: 150px
+    height: 150px
 </style>

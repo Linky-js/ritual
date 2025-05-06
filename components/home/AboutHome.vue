@@ -4,7 +4,7 @@ const props = defineProps({
   aboutHomeObject: {
     type: Object,
     default: {
-      
+
     }
   }
 })
@@ -20,26 +20,35 @@ const text =
 </template>
 <style lang="sass" scoped>
 .about
-    padding-bottom: 82px
+  padding-bottom: 82px
 .about__content
-    display: flex
-    max-width: 1200px
-    color: #000
+  display: flex
+  max-width: 1200px
+  color: #000
+  font-family: Montserrat
+  font-size: 25px
+  font-style: normal
+  font-weight: 400
+  line-height: 153.688%
+  position: relative
+  padding-left: 30px
+  &::before
+    content: ''
+    width: 2px
+    height: 110%
+    background-color: #1E6568
+    position: absolute
+    left: 0
+    top: 50%
+    transform: translateY(-50%)
+@media (max-width: 1024px)
+  .about__content
+    font-size: 20px
 
-    font-family: Montserrat
-    font-size: 25px
-    font-style: normal
-    font-weight: 400
-    line-height: 153.688%
-    position: relative
-    padding-left: 30px
+@media (max-width: 620px)
+  .about__content
+    font-size: 16px
+    padding-left: 15px
     &::before
-        content: ''
-        width: 2px
-        height: 110%
-        background-color: #1E6568
-        position: absolute
-        left: 0
-        top: 50%
-        transform: translateY(-50%)
+      width: 1px
 </style>

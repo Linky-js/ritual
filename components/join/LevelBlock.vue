@@ -159,4 +159,57 @@ const openModal = () => {
     margin-top: 50px
     .btn
       min-width: 300px
+@media (max-width: 1600px)
+  .level
+    &__head
+      font-size: 40px
+    &__item
+      &-head
+        font-size: 40px
+      &-price
+        font-size: 40px
+@media (max-width: 1024px)
+  .level
+    padding-top: 100px
+    padding-bottom: 100px
+    &__head
+      font-size: 32px
+      margin-bottom: 50px
+    &__item
+      &-head
+        font-size: 32px
+      &-desk
+        font-size: 20px
+      &-i
+        font-size: 20px
+      &-price
+        font-size: 32px
+@media (max-width: 620px)
+  .level
+    padding-top: 50px
+    padding-bottom: 50px
+    &__head
+      font-size: 24px
+      text-align: center
+      max-width: 100%
+      width: 100%
+      margin-bottom: 0px
+    &__item
+      &-head
+        font-size: 24px
+        margin-bottom: 20px
+      &-desk
+        font-size: 16px
+      &-i
+        font-size: 16px
+        &::before
+          width: 40px
+          height: 45px
+          background-size: cover
+      &-price
+        font-size: 24px
+    &__btn
+      .btn
+        max-width: 100%
+        width: 100%
 </style>

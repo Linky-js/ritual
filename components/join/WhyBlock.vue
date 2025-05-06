@@ -86,4 +86,40 @@ const whyList = [
       width: 100%
       height: 250px
       object-fit: cover
+@media (max-width: 1600px)
+  .why 
+    .head 
+      font-size: 40px
+    &__item 
+      img 
+        height: 120px
+      p 
+        font-size: 20px
+@media (max-width: 1024px)
+  .why 
+    .head 
+      font-size: 36px
+    &__list
+      gap: 20px
+      grid-template-columns: repeat(2, 1fr)
+    &__item 
+      img 
+        height: 100px
+      p 
+        font-size: 18px
+@media (max-width: 620px)
+  .why 
+    .head 
+      font-size: 24px
+      width: 100%
+      max-width: 100%
+      text-align: center
+    &__list
+      grid-template-columns: repeat(1, 1fr)
+      margin-bottom: 30px
+    &__item 
+      img 
+        height: 40px
+      p 
+        font-size: 16px
 </style>

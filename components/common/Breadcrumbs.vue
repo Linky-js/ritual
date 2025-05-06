@@ -30,7 +30,8 @@ function getBreadcrumbLabel(part) {
   const map = {
     about: 'О компании',
     specialists: 'Специалисты',
-    news: 'Информационные материалы'
+    news: 'Информационные материалы',
+    join: 'Присоединиться как специалист'
   }
 
   return map[part] || part.charAt(0).toUpperCase() + part.slice(1)
@@ -51,4 +52,9 @@ function getBreadcrumbLabel(part) {
     &:first-child
       color: #196064
       text-decoration: underline
+@media (max-width: 1024px)
+  .breadcrumbs
+    padding: 15px 0
+    a
+      font-size: 12px
 </style>

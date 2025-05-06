@@ -1,4 +1,3 @@
-
 <script setup>
 import Logotype from '../common/Logotype.vue';
 
@@ -38,4 +37,20 @@ const props = defineProps({
     flex-wrap: wrap
     justify-content: center
     gap: 40px
+@media (max-width: 1600px)
+  .company
+    padding-top: 50px
+    .container
+      gap: 20px
+    &__list
+      gap: 20px
+@media (max-width: 1024px)
+  .company
+    &__list
+      gap: 10px
+@media (max-width: 620px)
+  .company
+    h2
+      max-width: 100%
+      width: 100%
 </style>

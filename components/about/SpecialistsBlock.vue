@@ -19,8 +19,8 @@ const props = defineProps({
       </div>
       <div class="spec__title2">{{ specialistsBlockObject.dopText }}</div>
       <div class="spec__list">
-        <SpecItem v-for="(spec, index) in specialistsBlockObject.specialists" :key="index" :name="spec.title.rendered" :description="spec.excerpt.rendered"
-          :img="spec._embedded['wp:featuredmedia'][0].source_url" />
+        <SpecItem v-for="(spec, index) in specialistsBlockObject.specialists" :key="index" :name="spec.title.rendered"
+          :description="spec.excerpt.rendered" :img="spec._embedded['wp:featuredmedia'][0].source_url" />
 
       </div>
       <div class="spec__btn">
@@ -68,4 +68,42 @@ const props = defineProps({
     align-items: center
     justify-content: center
     margin-top: 35px
+@media (max-width: 1600px)
+  .spec
+    &__title2
+      font-size: 30px
+    &__head
+      h2
+        font-size: 30px
+      p
+        font-size: 18px
+    &__btn
+      margin-top: 25px
+@media (max-width: 1024px)
+  .spec
+    padding-top: 30px
+    &__title2
+      font-size: 24px
+    &__head
+      h2
+        font-size: 24px
+      p
+        font-size: 16px
+    &__btn
+      margin-top: 20px
+    &__list
+      gap: 20px
+      margin-top: 20px
+@media (max-width: 620px)
+  .spec
+    padding-top: 0px
+    &__title2
+      font-size: 18px
+    &__head
+      h2
+        font-size: 18px
+      p
+        font-size: 14px
+    &__btn
+      margin-top: 15px
 </style>
