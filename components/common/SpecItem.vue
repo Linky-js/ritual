@@ -1,5 +1,5 @@
 <script setup>
- const props = defineProps({
+const props = defineProps({
   name: String,
   description: String,
   img: String
@@ -29,11 +29,11 @@
     border: 2px solid #155D6161
     z-index: 1
     position: relative
+    overflow: hidden
     img
       width: 100%
       height: 100%
       object-fit: cover
-      border-radius: 30px
   &-text
     margin-top: -35px
     background: #B1DBDD
@@ -53,10 +53,18 @@
     font-size: 24px
     font-style: italic
     line-height: 130%
+    text-align: center
   &-desk
     color: #181818
     font-family: "Alethia Pro"
     font-size: 16px
     font-style: italic
     line-height: 130%
+    text-align: center
+@media (max-width: 1024px)
+  .spec__item
+    &-name
+      font-size: 20px
+    &-desk
+      font-size: 16px
 </style>

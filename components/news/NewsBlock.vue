@@ -17,30 +17,16 @@ onMounted(() => {
     <div class="container">
       <TitleMinBlock title="Статьи" />
       <div class="news__list">
-        <NuxtLink
-          v-for="(item, index) in newsList"
-          :key="index"
-          class="news__item"
-          :to="item.slug ? '/post/' + item.slug : ''"
-        >
-          <img
-            :src="item._embedded['wp:featuredmedia'][0].source_url"
-            :alt="item.title.rendered"
-          />
+        <NuxtLink v-for="(item, index) in newsList" :key="index" class="news__item"
+          :to="item.slug ? '/post/' + item.slug : ''">
+          <img :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
           <h3>{{ item.title.rendered }}</h3>
           <div class="item-text" v-html="item.excerpt.rendered"></div>
           <div class="btn-arrow">
-            <svg
-              width="12"
-              height="8"
-              viewBox="0 0 12 8"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M11.3536 4.35355C11.5488 4.15829 11.5488 3.84171 11.3536 3.64645L8.17157 0.464466C7.97631 0.269204 7.65973 0.269204 7.46447 0.464466C7.2692 0.659728 7.2692 0.976311 7.46447 1.17157L10.2929 4L7.46447 6.82843C7.2692 7.02369 7.2692 7.34027 7.46447 7.53553C7.65973 7.7308 7.97631 7.7308 8.17157 7.53553L11.3536 4.35355ZM0 4.5H11V3.5H0V4.5Z"
-                fill="white"
-              />
+                fill="white" />
             </svg>
           </div>
         </NuxtLink>
@@ -102,4 +88,18 @@ onMounted(() => {
   transform: translateX(-50%)
   border-radius: 50%
   transition: .3s all
+@media (max-width: 1024px)
+  .news__list
+    grid-template-columns: repeat(2, 1fr)
+  .news__item
+    img
+      height: 200px
+@media (max-width: 620px)
+  .news__list
+    grid-template-columns: repeat(1, 1fr)
+  .news__item
+    h3
+      font-size: 20px
+    img
+      height: 150px
 </style>

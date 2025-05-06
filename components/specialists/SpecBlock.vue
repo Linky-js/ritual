@@ -88,4 +88,23 @@ const specialists = [
     line-height: 130%
     padding: 10px 20px
     color: #fff
+
+@media (max-width: 1024px)
+  .spec
+    padding-top: 50px
+    padding-bottom: 50px
+    &__list
+      margin-top: 20px
+      gap: 20px
+      grid-template-columns: repeat(2, 1fr)
+    &__block
+      margin-top: 20px
+    &__head
+      font-size: 20px
+@media (max-width: 620px)
+  .spec
+    &__list
+      grid-template-columns: repeat(1, 1fr)
+    &__block
+      margin-top: 20px
 </style>

@@ -65,5 +65,19 @@ const matList = [
       transform: scale(1.03)
       h3 
         color: #96C1C3
+@media (max-width: 1024px)
+  .mat
+    padding-top: 60px
+  .mat__list
+    grid-template-columns: repeat(2, 1fr)
+    gap: 20px
+@media (max-width: 620px)
+  .mat__list
+    grid-template-columns: repeat(1, 1fr)
+  .mat__item
+    img
+      height: 250px
       
+    h3
+      font-size: 18px
 </style>

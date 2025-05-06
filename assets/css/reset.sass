@@ -323,20 +323,12 @@ body
   position: relative
   input::placeholder
     color:#fff !important
-
-  // Для Safari
   input::-webkit-input-placeholder
     color: #fff !important
-
-  // Для Firefox
   input::-moz-placeholder
     color: #fff !important
-
-  // Для IE 10-11
   input:-ms-input-placeholder
     color: #fff !important
-
-  // Для Edge
   input::-ms-input-placeholder
     color: #fff !important
   input, textarea
@@ -368,3 +360,27 @@ body
   textarea
     min-height: 150px
     resize: none
+@media (max-width: 1600px)
+  .logo__title 
+    font-size: 13px
+  .logo__subtitle
+    font-size: 9px
+  .logo img
+    width: 70px
+  .btn
+    font-size: 14px
+  .btn-border
+    font-size: 14px
+  .container
+    padding: 0 10px
+  .head-h2, h2, .head
+    font-size: 36px
+@media (max-width: 1024px)
+  .head-h2, .head
+    font-size: 28px
+@media (max-width: 620px)
+  .logo__title, .logo__subtitle 
+    display: none
+  .head-h2, .head, h2
+    font-size: 24px
+  

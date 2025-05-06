@@ -4,12 +4,14 @@ import bgimg from "~/assets/img/bg-spec-big.png";
 <template>
   <div class="text" :style="{ backgroundImage: `url(${bgimg})` }">
     <div class="container">
-      <p> Наша команда специалистов – это не просто сотрудники ритуального сервиса, это чуткие и внимательные люди, готовые оказать вам всестороннюю поддержку и помощь в этот непростой период.</p>
+      <p> Наша команда специалистов – это не просто сотрудники ритуального сервиса, это чуткие и внимательные люди,
+        готовые оказать вам всестороннюю поддержку и помощь в этот непростой период.</p>
     </div>
   </div>
   <div class="text2">
     <div class="container">
-      <p>Доверьтесь нам, и мы сделаем все возможное, чтобы облегчить вашу боль и помочь достойно проводить близкого человека в последний путь.</p>
+      <p>Доверьтесь нам, и мы сделаем все возможное, чтобы облегчить вашу боль и помочь достойно проводить близкого
+        человека в последний путь.</p>
     </div>
   </div>
 </template>
@@ -46,4 +48,26 @@ import bgimg from "~/assets/img/bg-spec-big.png";
       border-radius: 50%
       filter: blur(45px)
       z-index: -1
+@media (max-width: 1024px)
+  .text
+    padding-top: 50px
+    height: auto
+    background-image: none !important
+    p
+      font-size: 20px
+  .text2
+    padding-top: 50px
+    p
+      font-size: 20px
+@media (max-width: 620px)
+  .text
+    padding-top: 30px
+    height: auto
+    background-image: none !important
+    p
+      font-size: 16px
+  .text2
+    padding-top: 30px
+    p
+      font-size: 16px
 </style>

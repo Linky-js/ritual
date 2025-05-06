@@ -104,4 +104,40 @@ $base2: #196064
       transition: .3s all
       &:hover
         color: $base
+@media (max-width: 1600px)
+.footer
+  &__content
+    flex-wrap: wrap
+    justify-content: center
+    gap: 30px
+  &__menu
+    flex-wrap: wrap
+    justify-content: center
+    gap: 10px
+    a
+      font-size: 16px
+  &__soc
+    a
+      font-size: 16px
+@media (max-width: 1024px)
+  .footer__title
+    margin-bottom: -15px
+@media (max-width: 620px)
+  .footer__title
+    margin-bottom: -5px
+  .footer__menu
+    order: 2  
+    a
+      text-align: center
+      font-size: 14px
+  .footer__soc
+    flex-wrap: wrap
+    align-items: center
+    justify-content: center
+    text-align: center
+    img
+      width: 25px
+      height: 25px
+    a 
+      font-size: 14px
 </style>

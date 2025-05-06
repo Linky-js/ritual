@@ -14,9 +14,7 @@ const props = defineProps({
     <div class="container">
       <div class="services__content">
         <h2 class="head-h2">{{ servicesHomeObject.head }}</h2>
-        <div class="subhead" v-html="servicesHomeObject.text">
-
-        </div>
+        <div class="subhead" v-html="servicesHomeObject.text"></div>
       </div>
       <div class="services__dop-content">
         <p>
@@ -38,7 +36,7 @@ const props = defineProps({
   padding: 79px 0 54px
 .subhead
   color: #000
-  text-align: center
+  text-align: right
   font-family: Montserrat
   font-size: 25px
   font-style: normal
@@ -68,5 +66,29 @@ const props = defineProps({
   padding: 17px 0
   p 
     max-width: 837px
-
+@media (max-width: 1600px)
+  .head-h2
+    max-width: max-content
+    padding-bottom: 10px
+  .subhead
+    font-size: 18px
+  .services__content
+    gap: 30px
+  .services__dop-content
+    font-size: 22px
+@media (max-width: 620px)
+  .services
+    height: 800px
+    background-position: center bottom
+    background-size: contain
+    padding: 50px 0
+    &__content
+      flex-direction: column
+      align-items: center
+      padding: 0
+  .subhead
+    text-align: center
+    font-size: 16px
+  .services__dop-content
+    margin-top: 20px
 </style>

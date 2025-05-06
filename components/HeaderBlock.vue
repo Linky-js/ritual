@@ -1,8 +1,25 @@
 <script setup>
 import logo from "../assets/img/logo.svg";
 import phoneSvg from "../assets/img/phone.svg";
+import phoneSvgWhite from "../assets/img/phone-white.svg";
+import userSvg from "../assets/img/user.svg";
 import { useCookie } from "#app";
 const linkAcc = ref(null);
+
+
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+
+const isMenuOpen = ref(false)
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+const route = useRoute()
+
+watch(route, () => {
+  isMenuOpen.value = false
+})
 
 onMounted(() => {
   let acc = useCookie("auth_token");
@@ -22,10 +39,10 @@ onMounted(() => {
         <div class="logo__subtitle">и специалистов ритуального сервиса</div>
       </div>
     </NuxtLink>
-    <div class="header__menu">
+    <div class="header__menu" :class="{ active: isMenuOpen }">
       <NuxtLink :to="'/about'">О нас</NuxtLink>
       <div class="header__menu__link">
-        <NuxtLink :to="'/'">Специалисты</NuxtLink>
+        <NuxtLink :to="'/'" class="desktop">Специалисты</NuxtLink>
         <div class="header__submenu">
           <NuxtLink :to="'/specialists'">Найти специалиста</NuxtLink>
           <NuxtLink :to="'/join'">Присоединиться как специалист</NuxtLink>
@@ -33,9 +50,17 @@ onMounted(() => {
       </div>
       <NuxtLink :to="'/news'">Материалы</NuxtLink>
       <NuxtLink :to="linkAcc" class="btn"><span>Личный кабинет</span></NuxtLink>
-      <NuxtLink :to="'tel:+79990091560'" class="header__phone"
-        ><img :src="phoneSvg" alt="" />+7 (999) 009-15-60</NuxtLink
-      >
+      <NuxtLink :to="'tel:+79990091560'" class="header__phone"><img :src="phoneSvg" alt="" />+7 (999) 009-15-60
+      </NuxtLink>
+    </div>
+    <div class="mob">
+      <NuxtLink :to="linkAcc" class="user"><img :src="userSvg" alt=""></NuxtLink>
+      <NuxtLink :to="'tel:+79990091560'" class="phone"><img :src="phoneSvgWhite" alt="" /></NuxtLink>
+      <div class="burger" :class="{ active: isMenuOpen }" @click="toggleMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </div>
 </template>
@@ -43,6 +68,8 @@ onMounted(() => {
 <style lang="sass" scoped>
 $black: #090909
 $base2: #196064
+.mob 
+  display: none
 .header
   padding: 16px 50px
   display: flex
@@ -58,31 +85,32 @@ $base2: #196064
       .header__submenu
         position: absolute
         width: 120%
-        top: -15px
+        top: 30px
         left: 50%
         transform: translateX(-50%)
         display: flex
         flex-direction: column
         gap: 10px
-        padding: 50px 1px 30px
-        background: linear-gradient(180deg, #B3DEE0 0%, #10595C 100%)
+        padding: 15px 5px 25px
+        background: #10595C 
+        border-radius: 15px
         opacity: 0
         visibility: hidden
         delay: .3s
         transition: .3s all
         z-index: 1
-        border-radius: 2px
         a
           color: #FFF
           text-align: center
-          font-family: Montserrat
-          font-size: 15px
+          font-size: 16px
           font-style: normal
-          font-weight: 600
           line-height: normal
           &:hover
-            color: $black
+            color: #fff
       &:hover
+        a 
+          &::after
+            background: #fff
         .header__submenu
           delay: .9s
           opacity: 1
@@ -122,4 +150,108 @@ $base2: #196064
       color: $base2
     &::after
       display: none
+@media (max-width: 1600px)
+  .header
+    padding: 15px 10px
+    &__menu
+      gap: 15px
+      a
+        font-size: 14px
+  .header__menu__link .header__submenu a
+    font-size: 11px
+@media (max-width: 1024px)
+  .header__menu
+    position: fixed
+    z-index: -1
+    top: 0
+    opacity: 0
+    left: 0
+    right: 0
+    width: 100%
+    height: 100%
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    gap: 20px
+    background: #fff
+    transition: .3s all
+    visibility: hidden
+    .desktop
+      display: none
+    a
+      font-size: 14px
+    &.active
+      z-index: 9
+      opacity: 1
+      visibility: visible
+      left: 0
+  .mob
+    display: flex
+    align-items: center
+    gap: 15px
+  .phone, .user
+    width: 40px
+    height: 40px
+    border-radius: 8px
+    display: flex
+    align-items: center
+    justify-content: center
+    background: #10595C
+    img 
+      width: 20px
+      height: 20px
+  .burger
+    display: flex
+    flex-direction: column
+    gap: 8px
+    width: 30px
+    height: 24px
+    cursor: pointer
+    position: relative
+    z-index: 1001
+    span
+      width: 100%
+      height: 2px
+      background: #181818
+      border-radius: 2px
+      transition: all 0.3s ease
+    &.active
+      position: fixed
+      top: 27px
+      right: 10px
+      span:nth-child(1)
+        transform: translateY(10px) rotate(45deg)
+      span:nth-child(2)
+        opacity: 0
+      span:nth-child(3)
+        transform: translateY(-10px) rotate(-45deg)
+  .header__menu__link
+    display: flex
+    flex-direction: column
+    gap: 15px
+    align-items: center
+    .header__submenu
+      position: relative
+      width: 100%
+      top: 0
+      left: 0
+      transform: translateX(0)
+      display: flex
+      flex-direction: column
+      gap: 10px
+      padding: 15px 5px 25px
+      background: #10595C 
+      border-radius: 15px
+      opacity: 1
+      visibility: visible
+      z-index: 1
+      background: transparent
+      text-align: center
+      align-items: center
+      padding: 0
+      gap: 15px
+      a
+        color: #181818
+        font-size: 14px
+
 </style>

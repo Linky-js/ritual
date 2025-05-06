@@ -5,6 +5,7 @@ import AboutBlock from "~/components/about/AboutBlock.vue";
 import SpecialistsBlock from "~/components/about/SpecialistsBlock.vue";
 import CoopBlock from "~/components/about/CoopBlock.vue";
 import CompanyBlock from "~/components/about/CompanyBlock.vue";
+import ReestrBlock from "~/components/about/ReestrBlock.vue";
 import { useApiStore } from '~/stores/api'
 
 const apiStore = useApiStore()
@@ -124,6 +125,7 @@ onMounted(() => {
   <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
   <CoopBlock :coopBlockkObject="coopBlockkObject" />
   <CompanyBlock :companyBlockObject="companyBlockObject" />
+  <ReestrBlock />
 </template>
 
 <style>

@@ -9,7 +9,7 @@ const props = defineProps({
   mainHomeObject: {
     type: Object,
     default: {
-      
+
     }
   }
 }
@@ -29,7 +29,8 @@ const openModal = () => {
       </h2>
       <div class="main__btns">
         <NuxtLink to="/specialists" class="btn"><span>{{ mainHomeObject.buttonLeft }}</span></NuxtLink>
-        <NuxtLink class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span></NuxtLink>
+        <NuxtLink class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span>
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -43,4 +44,22 @@ const openModal = () => {
     align-items: center
     gap: 20px
     margin-top: 150px
+@media (max-width: 1024px)
+  .main
+    padding: 120px 0
+  .main__btns
+    gap: 10px
+  .head
+    font-size: 26px
+@media (max-width: 620px)
+  .main
+    padding: 70px 0
+  .head
+    font-size: 20px
+  .main__btns
+    flex-direction: column
+    margin-top: 50px
+    .btn, .btn-border
+      max-width: 100%
+      width: 100%
 </style>
