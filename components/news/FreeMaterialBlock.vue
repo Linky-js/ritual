@@ -1,24 +1,14 @@
 <script setup>
 import TitleMinBlock from '../common/TitleMinBlock.vue';
-import img from '../../assets/img/def-spec.jpg'
-const matList = [
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-]
+const props = defineProps({
+  freeMaterials: {
+    type: Array,
+    default: []
+  }
+})
+onMounted(() => {
+  console.log('freeMaterials', props.freeMaterials);
+})
 </script>
 
 <template>
@@ -26,9 +16,9 @@ const matList = [
     <div class="container">
       <TitleMinBlock title="Бесплатные материалы для специалистов ритуального сервиса" />
       <div class="mat__list">
-        <NuxtLink class="mat__item" v-for="(item, index) in matList" :key="index">
-          <img :src="item.img" :alt="item.title" />
-          <h3>{{ item.title }}</h3>
+        <NuxtLink class="mat__item" v-for="(item, index) in freeMaterials" :key="index" :to="item.acf.url">
+          <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+          <h3>{{ item.title.rendered }}</h3>
         </NuxtLink>
       </div>
     </div>

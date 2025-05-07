@@ -18,7 +18,7 @@ const props = defineProps({
         <Logotype v-for="logo in reestrBlockObject.kartinki" :key="logo.img" :img="logo" />
       </div>
       <div class="company__btn">
-        <NuxtLink to="/reestr" class="btn"><span>Присоединиться к АБИСРС как специалист</span></NuxtLink>
+        <NuxtLink to="/join" class="btn"><span>Присоединиться к АБИСРС как специалист</span></NuxtLink>
       </div>
     </div>
   </div>

@@ -1,24 +1,11 @@
 <script setup>
 import TitleMinBlock from '../common/TitleMinBlock.vue';
-import img from '../../assets/img/def-spec.jpg'
-const matList = [
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-]
+const props = defineProps({
+  payMaterials: {
+    type: Array,
+    default: []
+  }
+})
 </script>
 
 <template>
@@ -27,9 +14,9 @@ const matList = [
       <TitleMinBlock title="Платные материалы для специалистов ритуального сервиса" />
       <p>Платные материалы для специалистов ритуального сервиса доступны для всех, кто вступает в наш Альянс. Это уникальная возможность погрузиться в мир профессиональных знаний и навыков, которые помогут вам выделиться на рынке и поднять качество предоставляемых услуг на новый уровень.</p>
       <div class="mat__list">
-        <div class="mat__item" v-for="(item, index) in matList" :key="index">
-          <img :src="item.img" :alt="item.title" />
-          <h3>{{ item.title }}</h3>
+        <div class="mat__item" v-for="(item, index) in payMaterials" :key="index">
+          <img v-if="item._embedded['wp:featuredmedia']" :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+          <h3>{{ item.title.rendered }}</h3>
         </div>
       </div>
     </div>

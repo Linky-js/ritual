@@ -1,17 +1,22 @@
 <script setup>
 import bgimg from "~/assets/img/bg-spec-big.png";
+
+const props = defineProps({
+  textBlockObject: {
+    type: Object,
+    default: {}
+  }
+})
 </script>
 <template>
-  <div class="text" :style="{ backgroundImage: `url(${bgimg})` }">
+  <div class="text" :style="{ backgroundImage: `url(${textBlockObject.photo})` }">
     <div class="container">
-      <p> Наша команда специалистов – это не просто сотрудники ритуального сервиса, это чуткие и внимательные люди,
-        готовые оказать вам всестороннюю поддержку и помощь в этот непростой период.</p>
+      <p>{{ textBlockObject.text }}</p>
     </div>
   </div>
   <div class="text2">
     <div class="container">
-      <p>Доверьтесь нам, и мы сделаем все возможное, чтобы облегчить вашу боль и помочь достойно проводить близкого
-        человека в последний путь.</p>
+      <p>{{ textBlockObject.dopText }}</p>
     </div>
   </div>
 </template>

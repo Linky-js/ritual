@@ -48,7 +48,7 @@ onMounted(() => {
           <NuxtLink :to="'/join'">Присоединиться как специалист</NuxtLink>
         </div>
       </div>
-      <NuxtLink :to="'/news'">Материалы</NuxtLink>
+      <NuxtLink :to="'/materials'">Материалы</NuxtLink>
       <NuxtLink :to="linkAcc" class="btn"><span>Личный кабинет</span></NuxtLink>
       <NuxtLink :to="'tel:+79990091560'" class="header__phone"><img :src="phoneSvg" alt="" />+7 (999) 009-15-60
       </NuxtLink>

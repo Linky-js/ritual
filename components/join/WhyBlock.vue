@@ -1,11 +1,4 @@
 <script setup>
-import icon1 from "~/assets/img/why-1.svg";
-import icon2 from "~/assets/img/why-2.svg";
-import icon3 from "~/assets/img/why-3.svg";
-import icon4 from "~/assets/img/why-4.svg";
-import icon5 from "~/assets/img/why-5.svg";
-import icon6 from "~/assets/img/why-6.svg";
-import bg from "~/assets/img/why-bg.jpg";
 
 const props = defineProps({
   whyBlockObject: {

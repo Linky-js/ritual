@@ -1,23 +1,11 @@
 <script setup>
 import img from '../../assets/img/def-spec.jpg'
-const joinList = [
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-]
+const props = defineProps({
+  joinMaterials: {
+    type: Array,
+    default: []
+  }
+})
 </script>
 
 <template>
@@ -32,9 +20,9 @@ const joinList = [
         те ресурсы, которые наиболее актуальны и полезны для вашей деятельности, обеспечивая гибкость и доступность
         знаний.</p>
       <div class="join__list">
-        <div class="join__item" v-for="(item, index) in joinList" :key="index">
-          <img :src="item.img" :alt="item.title" />
-          <h3>{{ item.title }}</h3>
+        <div class="join__item" v-for="(item, index) in joinMaterials" :key="index">
+          <img v-if="item._embedded['wp:featuredmedia']" :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+          <h3>{{ item.title.rendered }}</h3>
         </div>
       </div>
     </div>
