@@ -123,6 +123,11 @@ onMounted(() => {
     font-size: 18px
   .about__item-head
     font-size: 24px
+    width: 100%
+    text-align: center
   .about__item
     min-height: 60vh
+  .about__item-text
+    text-align: center
+
 </style>

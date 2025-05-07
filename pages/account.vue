@@ -252,11 +252,13 @@ const saveAcc = async () => {
         </div>
         <div v-show="activeTab === 2" class="acc__slide">
           <h2 class="acc__head">Платные материалы</h2>
+          <p>После оплаты, ожидайте письмо на почте с купленным материалом. И не забудьте проверить спам на всякий случай.</p>
           <div class="mat__list">
             <div class="mat__item" v-for="(item, index) in payMaterials" :key="index">
               <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
               <h3>{{ item.title.rendered }}</h3>
               <p v-if="item.acf.price && item.acf.price != ''">{{ item.acf.price }} ₽</p>
+              <a :href="item.acf.url" class="btn"><span>Купить</span></a>
             </div>
           </div>
         </div>
@@ -299,6 +301,12 @@ const saveAcc = async () => {
 
   &__content 
     width: 100%
+    .acc__slide
+      p
+        font-size: 16px
+        line-height: 130%
+        text-align: center
+        margin-bottom: 15px
 .box-input__textarea
   grid-column: 1 / 3
   width: 100%
@@ -348,7 +356,6 @@ const saveAcc = async () => {
     height: 230px
     width: 100%
     object-fit: cover
-    border-radius: 15px
   label
     margin-top: auto
     font-size: 16px
