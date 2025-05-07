@@ -9,6 +9,10 @@ const apiStore = useApiStore()
 const { data: page } = await useAsyncData('specialistspage', () =>
   $fetch(`${apiStore.apiUrl}pages/160?acf_fields=true&_embed`)
 );
+
+const { data: specialists } = await useAsyncData('specialists', () =>
+  $fetch(`${apiStore.apiUrl}specialist?_embed`)
+);
 const textBlockObject = ref(null);
 async function getImageUrl(id) {
   if (!id) return null;
@@ -36,13 +40,35 @@ console.log('page', page.value);
   
 }
 await prepareTextBlock();
+const categorizedSpecialists = [];
+
+specialists.value.forEach((specialist) => {
+  const categories = specialist._embedded?.['wp:term']?.[0] || [];
+
+  categories.forEach((category) => {
+    const existingCategory = categorizedSpecialists.find(cat => cat.title === category.name);
+
+    if (existingCategory) {
+      existingCategory.items.push(specialist);
+    } else {
+      categorizedSpecialists.push({
+        title: category.name,
+        slug: category.slug, // если нужно
+        id: category.id,     // если нужно
+        items: [specialist]
+      });
+    }
+  });
+});
+console.log('specialistsBlockObject',categorizedSpecialists);
+
 </script>
 
 <template>
   <TitleBlock title="Специалисты ритуального сервиса" />
   <Breadcrumbs />
   <TextBlock :textBlockObject="textBlockObject"/>
-  <SpecBlock />
+  <SpecBlock :specialistsBlockObject="categorizedSpecialists" />
 </template>
 
 <style>

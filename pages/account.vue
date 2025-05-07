@@ -39,10 +39,37 @@ const srcPhoto = ref(null)
 const phoneRef = ref(null)
 const fileName = ref("")
 const mediaId = ref(null)
+import { useApiStore } from '~/stores/api'
 
+const apiStore = useApiStore()
 const authToken = useCookie("auth_token")
 
+const materials = ref([]);
+const freeMaterials = ref([]);
+const payMaterials = ref([]);
+async function getMaterials() {
+  
+  try {
+    const res = await $fetch(`${apiStore.apiUrl}materials?_embed`);
+    materials.value = res;
+    console.log('materials', materials.value);
+    for (let m of materials.value) {
+      for (let c of m.categories) {
+        if (c == 3 ){
+          freeMaterials.value.push(m)
+        } else if (c == 4) {
+          payMaterials.value.push(m)
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Ошибка при получении материала:", error);
+    return null;
+  }
+}
+
 onMounted(async () => {
+  await getMaterials();
   if (!authToken.value) return
 
   try {
@@ -217,18 +244,19 @@ const saveAcc = async () => {
         <div v-show="activeTab === 1" class="acc__slide">
           <h2 class="acc__head">Бесплатные материалы</h2>
           <div class="mat__list">
-            <div class="mat__item" v-for="(item, index) in matList" :key="index">
-              <img :src="item.img" :alt="item.title" />
-              <h3>{{ item.title }}</h3>
+            <div class="mat__item" v-for="(item, index) in freeMaterials" :key="index">
+              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+              <h3>{{ item.title.rendered }}</h3>
             </div>
           </div>
         </div>
         <div v-show="activeTab === 2" class="acc__slide">
           <h2 class="acc__head">Платные материалы</h2>
           <div class="mat__list">
-            <div class="mat__item" v-for="(item, index) in matList" :key="index">
-              <img :src="item.img" :alt="item.title" />
-              <h3>{{ item.title }}</h3>
+            <div class="mat__item" v-for="(item, index) in payMaterials" :key="index">
+              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+              <h3>{{ item.title.rendered }}</h3>
+              <p v-if="item.acf.price && item.acf.price != ''">{{ item.acf.price }} ₽</p>
             </div>
           </div>
         </div>
@@ -374,6 +402,13 @@ const saveAcc = async () => {
       font-weight: 600
       text-align: center
       transition: .3s all
+      margin-bottom: 10px
+    p
+      font-size: 25px
+      line-height: 130%
+      color: #181818 
+      font-weight: 600
+      text-align: center 
     &:hover
       transform: scale(1.03)
       h3 

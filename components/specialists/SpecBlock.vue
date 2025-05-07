@@ -2,66 +2,28 @@
 import SpecItem from '../common/SpecItem.vue';
 import TitleMinBlock from '../common/TitleMinBlock.vue';
 import img from '../../assets/img/def-spec.jpg'
-const specialists = [
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-]
+
+const props = defineProps({
+  specialistsBlockObject: {
+    type: Array,
+    default: []
+  }
+})
+
 </script>
 <template>
 
   <div class="spec">
     <div class="container">
+     
       <TitleMinBlock title="Ритуальные агенты" />
-      <div class="spec__block">
-        <div class="spec__head">Санкт-Петербург</div>
-        <div class="spec__list">
-          <SpecItem v-for="(item, index) in specialists" :key="index" :name="item.name" :img="item.img"
-            :description="item.description" />
-        </div>
-      </div>
-      <div class="spec__block">
-        <div class="spec__head">Москва</div>
-        <div class="spec__list">
-          <SpecItem v-for="(item, index) in specialists" :key="index" :name="item.name" :img="item.img"
-            :description="item.description" />
+      <div class="spec__blocks--wrapper">
+        <div v-for="(specialists, index) in specialistsBlockObject" :key="index" class="spec__block">
+          <div class="spec__head">{{ specialists.title }}</div>
+          <div class="spec__list">
+            <SpecItem v-for="(item, index) in specialists.items" :key="index" :name="item.title.rendered" :img="item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : ''"
+              :description="item.excerpt.rendered" />
+          </div>
         </div>
       </div>
     </div>

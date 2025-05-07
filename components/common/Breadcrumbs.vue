@@ -15,15 +15,16 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-const breadcrumbs = computed(() => {
-  const parts = route.path.split('/').filter(Boolean)
-
-  return parts.map((part, index) => {
-    return {
-      label: getBreadcrumbLabel(part),
-      path: '/' + parts.slice(0, index + 1).join('/')
-    }
-  })
+const props = defineProps({
+  breadcrumbs: {
+    type: Array,
+    default: [
+      {
+        label: 'О компании',
+        path: '/about'
+      }
+    ]
+  }
 })
 
 function getBreadcrumbLabel(part) {

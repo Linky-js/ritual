@@ -66,9 +66,14 @@ function onFileChange(e) {
 
   form.value.file = files && files.length ? files[0] : null;
   fileName.value = files && files.length ? files[0].name : null;
+  error.value = "";
 }
 
 async function onSubmit() {
+  if (!form.value.file ) {
+    error.value = "Пожалуйста, выберите файл";
+    return;
+  }
   form.value.fio = inputName.value;
   form.value.email = inputEmail.value;
   form.value.phone = inputPhone.value;
@@ -109,6 +114,7 @@ async function onSubmit() {
     }
 
     success.value = true;
+    successForm.value = true
     form.value = {
       fio: "",
       email: "",
@@ -143,6 +149,7 @@ async function onSubmit() {
         <h2>Оставьте заявку на вступление</h2>
         <p>Мы рассмотрим ее в течении дня и свяжемся с вами</p>
       </div>
+      <div v-if="error && !successForm && error !== 'Заявка отправлена' && error !== ''" class="error">{{ error }}</div>
       <form @submit.prevent="onSubmit" v-if="!successForm" class="modal__form">
         <div class="box-input">
           <input v-model="inputName" type="text" id="name" placeholder=" " ref="inputRef" required />
@@ -165,7 +172,7 @@ async function onSubmit() {
           <label :class="{ hidden: inputWork.trim() !== '' }" for="work">Род деятельности</label>
         </div>
         <div class="box-image">
-          <input type="file" id="photo" @change="onFileChange" hidden class="hidden-input" required />
+          <input type="file" id="photo" @change="onFileChange" hidden class="hidden-input" />
           <label for="photo">
             <svg width="38" height="37" viewBox="0 0 38 37" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -226,6 +233,15 @@ async function onSubmit() {
 </template>
 
 <style lang="sass" scoped>
+.error
+  color: red
+  font-size: 12px
+  padding: 5px
+  border-radius: 5px
+  border: 1px solid red
+  width: max-content
+  margin: 0 auto
+  margin-bottom: 10px
 .modal
   position: fixed
   top: 0

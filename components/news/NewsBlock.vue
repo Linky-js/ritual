@@ -18,7 +18,7 @@ onMounted(() => {
       <TitleMinBlock title="Статьи" />
       <div class="news__list">
         <NuxtLink v-for="(item, index) in newsList" :key="index" class="news__item"
-          :to="item.slug ? '/post/' + item.slug : ''">
+          :to="'/post/' + item.slug">
           <img :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
           <h3>{{ item.title.rendered }}</h3>
           <div class="item-text" v-html="item.excerpt.rendered"></div>

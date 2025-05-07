@@ -105,20 +105,20 @@ $base2: #196064
       &:hover
         color: $base
 @media (max-width: 1600px)
-.footer
-  &__content
-    flex-wrap: wrap
-    justify-content: center
-    gap: 30px
-  &__menu
-    flex-wrap: wrap
-    justify-content: center
-    gap: 10px
-    a
-      font-size: 16px
-  &__soc
-    a
-      font-size: 16px
+  .footer
+    &__content
+      flex-wrap: wrap
+      justify-content: center
+      gap: 30px
+    &__menu
+      flex-wrap: wrap
+      justify-content: center
+      gap: 10px
+      a
+        font-size: 16px
+    &__soc
+      a
+        font-size: 16px
 @media (max-width: 1024px)
   .footer__title
     margin-bottom: -15px

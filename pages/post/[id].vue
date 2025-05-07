@@ -12,15 +12,18 @@ const { data: postData } = await useAsyncData('post', () =>
 );
 
 const post = computed(() => postData.value?.[0] || null);
+console.log('POST', `${apiStore.apiUrl}posts?slug=${route.params.id}&_embed`);
+
 </script>
 
 <template>
   <TitleBlock :title="post?.title.rendered" />
-  <Breadcrumbs />
+  <Breadcrumbs :breadcrumbs="[{ label: 'Материалы', path: '/materials' }, { label: post?.title.rendered, path: '' }]" />
   <div v-if="post" class="post">
     <div class="container">
-      <img class="postImg" :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
       <h2>{{ post.title.rendered }}</h2>
+      <img class="postImg" :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
+      
       <div v-html="post.content.rendered" class="post__text"></div>
       <div v-if="post.acf?.text2" v-html="post.acf.text2" class="post__text"></div>
     </div>
@@ -44,6 +47,8 @@ const post = computed(() => postData.value?.[0] || null);
     font-size: 22px
     line-height: 130%
     color: #181818
+    h2
+      margin-bottom: 15px
     hr
       background: #96C1C3
       height: 1px
