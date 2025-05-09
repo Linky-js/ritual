@@ -19,7 +19,7 @@ onMounted(() => {
       <div class="news__list">
         <NuxtLink v-for="(item, index) in newsList" :key="index" class="news__item"
           :to="'/post/' + item.slug">
-          <img :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+          <img v-if="item._embedded['wp:featuredmedia']" :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
           <h3>{{ item.title.rendered }}</h3>
           <div class="item-text" v-html="item.excerpt.rendered"></div>
           <div class="btn-arrow">
