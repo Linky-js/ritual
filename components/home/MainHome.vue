@@ -1,35 +1,38 @@
 <script setup>
-import { ref } from 'vue'
-import ModalCall from '../common/ModalCall.vue'
+import { ref } from "vue";
+import ModalCall from "../common/ModalCall.vue";
 
-import bgmain from '../../assets/img/bg-main.jpg'
-import { NuxtLink } from '#components'
+import bgmain from "../../assets/img/bg-main.jpg";
+import { NuxtLink } from "#components";
 
 const props = defineProps({
   mainHomeObject: {
     type: Object,
-    default: {
+    default: {},
+  },
+});
 
-    }
-  }
-}
-)
-
-const showModal = ref(false)
+const showModal = ref(false);
 
 const openModal = () => {
-  showModal.value = true
-}
+  showModal.value = true;
+};
 </script>
 <template>
-  <div class="main" :style="{ background: `url(${bgmain}) center top / cover no-repeat` }">
+  <div
+    class="main"
+    :style="{ background: `url(${bgmain}) center top / cover no-repeat` }"
+  >
     <div class="container">
       <h2 class="head">
         <span v-html="mainHomeObject.title"></span>
       </h2>
       <div class="main__btns">
-        <NuxtLink to="/specialists" class="btn"><span>{{ mainHomeObject.buttonLeft }}</span></NuxtLink>
-        <NuxtLink class="btn-border btn-call" @click="openModal"><span>{{ mainHomeObject.buttonRight }}</span>
+        <NuxtLink to="/specialists" class="btn"
+          ><span>{{ mainHomeObject.buttonLeft }}</span></NuxtLink
+        >
+        <NuxtLink class="btn-border btn-call" to="/join"
+          ><span>{{ mainHomeObject.buttonRight }}</span>
         </NuxtLink>
       </div>
     </div>

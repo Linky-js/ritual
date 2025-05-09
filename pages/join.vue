@@ -89,7 +89,8 @@ await prepareLevelBlock();
 
 <template>
   <TitleBlock title="Присоединиться как специалист" />
-  <Breadcrumbs />
+  <Breadcrumbs :breadcrumbs="[{ label: 'Присоединиться как специалист', path: '' }]" />
+
   <TopBlock :topBlockObject="topBlockObject" />
   <WhyBlock :whyBlockObject="whyBlockObject" />
   <LevelBlock :levelBlockArray="levelBlockArray" />

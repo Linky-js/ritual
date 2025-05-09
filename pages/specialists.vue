@@ -66,7 +66,7 @@ console.log('specialistsBlockObject',categorizedSpecialists);
 
 <template>
   <TitleBlock title="Специалисты ритуального сервиса" />
-  <Breadcrumbs />
+  <Breadcrumbs :breadcrumbs="[{ label: 'Специалисты ритуального сервиса', path: '' }]" />
   <TextBlock :textBlockObject="textBlockObject"/>
   <SpecBlock :specialistsBlockObject="categorizedSpecialists" />
 </template>

@@ -57,7 +57,7 @@ await getMaterials();
 </script>
 <template>
   <TitleBlock title="Информационные материалы" />
-  <Breadcrumbs />
+  <Breadcrumbs :breadcrumbs="[{ label: 'Материалы', path: '' }]" />
   <NewsBlock :newsList="page" />
   <FreeMaterialBlock v-if="freeMaterials && freeMaterials.length > 0" :freeMaterials="freeMaterials" />
   <PayMaterialBlock :payMaterials="payMaterials" />

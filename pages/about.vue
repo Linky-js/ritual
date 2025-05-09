@@ -132,7 +132,8 @@ onMounted(() => {
 
 <template>
   <TitleBlock title="О компании" />
-  <Breadcrumbs />
+  <Breadcrumbs :breadcrumbs="[{ label: 'О компании', path: '' }]" />
+
   <AboutBlock v-if="aboutBlockObject" :aboutBlockObject="aboutBlockObject" />
   <SpecialistsBlock :specialistsBlockObject="specialistsBlockObject" />
   <CoopBlock :coopBlockkObject="coopBlockkObject" />
