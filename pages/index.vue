@@ -99,6 +99,10 @@ onMounted(() => {
 });
 </script>
 <template>
+  <Head>
+    <Title>ABISRS</Title>
+    <Meta name="description" content="Альнс Бальзамировщиков и специалистов ритуального сервиса" />
+  </Head>
   <MainHome :mainHomeObject="mainHomeObject" />
   <AboutHome :aboutHomeObject="aboutHomeObject" />
   <ServicesHome :servicesHomeObject="servicesHomeObject" />

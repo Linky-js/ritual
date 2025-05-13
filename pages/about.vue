@@ -131,6 +131,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <Head>
+    <Title>ABISRS - О компании</Title>
+    <Meta name="description" content="Альнс Бальзамировщиков и специалистов ритуального сервиса" />
+  </Head>
   <TitleBlock title="О компании" />
   <Breadcrumbs :breadcrumbs="[{ label: 'О компании', path: '' }]" />
 

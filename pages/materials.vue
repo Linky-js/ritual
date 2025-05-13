@@ -56,6 +56,10 @@ await getMaterials();
 
 </script>
 <template>
+  <Head>
+    <Title>ABISRS - Информационные материалы</Title>
+    <Meta name="description" content="Альянс бальзамировщиков и специалистов ритуального сервиса" />
+  </Head>
   <TitleBlock title="Информационные материалы" />
   <Breadcrumbs :breadcrumbs="[{ label: 'Материалы', path: '' }]" />
   <NewsBlock :newsList="page" />

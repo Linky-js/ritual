@@ -219,7 +219,7 @@ async function onSubmit() {
         <div class="check">
           <input type="checkbox" name="check" id="check" required />
           <label for="check">
-            <p>Я даю согласие на обработку персональных данных</p>
+            <p>Я даю согласие на обработку персональных данных, оферту и политику конфиденциальности</p>
           </label>
         </div>
         <button class="btn"><span>Отправить</span></button>

@@ -65,6 +65,10 @@ console.log('specialistsBlockObject',categorizedSpecialists);
 </script>
 
 <template>
+  <Head>
+    <Title>ABISRS - Специалисты ритуального сервиса</Title>
+    <Meta name="description" content="Наша команда специалистов – это не просто сотрудники ритуального сервиса, это чуткие и внимательные люди, готовые оказать вам всестороннюю поддержку и помощь в этот непростой период." />
+  </Head>
   <TitleBlock title="Специалисты ритуального сервиса" />
   <Breadcrumbs :breadcrumbs="[{ label: 'Специалисты ритуального сервиса', path: '' }]" />
   <TextBlock :textBlockObject="textBlockObject"/>

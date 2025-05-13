@@ -1,11 +1,15 @@
 <script setup>
-import img from '../../assets/img/def-spec.jpg'
+import ModalCall from '../common/ModalCall.vue';
 const props = defineProps({
   joinMaterials: {
     type: Array,
     default: []
   }
 })
+const showModal = ref(false)
+const openModal = () => {
+  showModal.value = true
+}
 </script>
 
 <template>
@@ -13,7 +17,7 @@ const props = defineProps({
     <div class="container">
       <div class="join__head">
         <div class="join__head-img"><img src="~/assets/img/rose.png" alt=""></div>
-        <h2>Вступить в АБИСРС <br>для полного доступа к материалам</h2>
+        <h2 @click="openModal">Вступить в АБИСРС <br>для полного доступа к материалам</h2>
         <div class="join__head-img"><img src="~/assets/img/rose.png" alt=""></div>
       </div>
       <p>Предусмотрена возможность выборочного приобретения платных материалов. Это позволяет вам самостоятельно выбрать
@@ -22,11 +26,12 @@ const props = defineProps({
       <div class="join__list">
         <div class="join__item" v-for="(item, index) in joinMaterials" :key="index">
           <img v-if="item._embedded['wp:featuredmedia']" :src="item._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
-          <h3>{{ item.title.rendered }}</h3>
+          <h3 >{{ item.title.rendered }}</h3>
         </div>
       </div>
     </div>
   </div>
+  <ModalCall v-if="showModal" @close="showModal = false" />
 </template>
 
 <style lang="sass" scoped>
@@ -38,6 +43,7 @@ const props = defineProps({
     align-items: center
     justify-content: center
     h2 
+      cursor: pointer
       text-align: center
       padding: 20px
       max-width: 1000px
@@ -48,6 +54,10 @@ const props = defineProps({
       border: 1px solid #155D61
       background: #fff
       z-index: 2
+      transition: .3s all
+      &:hover
+        background: #155D61
+        color: #fff
     &-img 
       position: relative
       &::before

@@ -41,28 +41,23 @@ const postDops = [
 </script>
 
 <template>
+
+  <Head>
+    <Title>ABISRS - {{ post?.title.rendered }}</Title>
+    <Meta name="description" :content="post?.acf?.metadescription ? post.acf.metadescription : 'Альянс бальзамировщиков и специалистов ритуального сервиса'" />
+  </Head>
   <TitleBlock :title="post?.title.rendered" />
-  <Breadcrumbs
-    :breadcrumbs="[
-      { label: 'Материалы', path: '/materials' },
-      { label: post?.title.rendered, path: '' },
-    ]"
-  />
+  <Breadcrumbs :breadcrumbs="[
+    { label: 'Материалы', path: '/materials' },
+    { label: post?.title.rendered, path: '' },
+  ]" />
   <div v-if="post" class="post">
     <div class="container">
       <h2>{{ post.title.rendered }}</h2>
-      <img
-        v-if="post._embedded['wp:featuredmedia']"
-        class="postImg"
-        :src="post._embedded['wp:featuredmedia'][0].source_url"
-        :alt="post.title.rendered"
-      />
+      <img v-if="post._embedded['wp:featuredmedia']" class="postImg"
+        :src="post._embedded['wp:featuredmedia'][0].source_url" :alt="post.title.rendered" />
       <div v-html="post.content.rendered" class="post__text"></div>
-      <div
-        v-if="post.acf?.text2"
-        v-html="post.acf.text2"
-        class="post__text"
-      ></div>
+      <div v-if="post.acf?.text2" v-html="post.acf.text2" class="post__text"></div>
       <div class="post__text3">
         {{ post.acf.czitata }}
       </div>
@@ -79,11 +74,9 @@ const postDops = [
         <img class="post__dop-img" src="/img/news-img.png" alt="" />
       </div>
       <div class="post__text4">
-        <h2>{{  post.acf.title_down }}</h2>
+        <h2>{{ post.acf.title_down }}</h2>
         <div class="post__btn">
-          <NuxtLink to="/specialists" class="btn"
-            ><span>Найти специалиста</span></NuxtLink
-          >
+          <NuxtLink to="/specialists" class="btn"><span>Найти специалиста</span></NuxtLink>
         </div>
       </div>
     </div>
