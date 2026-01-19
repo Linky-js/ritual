@@ -22,6 +22,13 @@ const props = defineProps({
   display: flex
   align-items: center
   flex-direction: column
+  transition: all .3s
+  &:hover 
+    transform: scale(1.03)
+    .spec__item-text
+      background: #155D61
+    .spec__item-name, .spec__item-desk 
+      color: #fff
   &-img
     height: 228px
     width: 225px
@@ -37,6 +44,7 @@ const props = defineProps({
   &-text
     margin-top: -35px
     background: #B1DBDD
+    transition: .3s all
     border-radius: 30px
     width: 100%
     display: flex
@@ -54,6 +62,7 @@ const props = defineProps({
     font-style: italic
     line-height: 130%
     text-align: center
+    transition: .3s all
   &-desk
     color: #181818
     font-family: "Alethia Pro"
@@ -61,6 +70,7 @@ const props = defineProps({
     font-style: italic
     line-height: 130%
     text-align: center
+    transition: .3s all
 @media (max-width: 1024px)
   .spec__item
     &-name

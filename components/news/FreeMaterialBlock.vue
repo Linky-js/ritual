@@ -16,7 +16,7 @@ onMounted(() => {
     <div class="container">
       <TitleMinBlock title="Бесплатные материалы для специалистов ритуального сервиса" />
       <div class="mat__list">
-        <NuxtLink class="mat__item" v-for="(item, index) in freeMaterials" :key="index" :to="item.acf.url">
+        <NuxtLink class="mat__item" v-for="(item, index) in freeMaterials" :key="index" :to="item.acf.url" target="_blank">
           <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
           <h3>{{ item.title.rendered }}</h3>
         </NuxtLink>
@@ -30,6 +30,8 @@ onMounted(() => {
 <style lang="sass" scoped>
 .mat
   padding-top: 150px
+  .title 
+    margin-bottom: 30px
   &__list
     display: grid
     grid-template-columns: repeat(4, 1fr)
@@ -66,8 +68,7 @@ onMounted(() => {
     grid-template-columns: repeat(1, 1fr)
   .mat__item
     img
-      height: 250px
-      
+      height: 100%
     h3
       font-size: 18px
 </style>

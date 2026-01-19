@@ -70,10 +70,10 @@ function onFileChange(e) {
 }
 
 async function onSubmit() {
-  if (!form.value.file ) {
-    error.value = "Пожалуйста, выберите файл";
-    return;
-  }
+  // if (!form.value.file ) {
+  //   error.value = "Пожалуйста, выберите файл";
+  //   return;
+  // }
   form.value.fio = inputName.value;
   form.value.email = inputEmail.value;
   form.value.phone = inputPhone.value;

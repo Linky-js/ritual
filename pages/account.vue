@@ -2,28 +2,7 @@
 import { onMounted, ref } from "vue"
 import { useCookie } from "#app"
 
-
 const activeTab = ref(0)
-
-import img from '../../assets/img/def-spec.jpg'
-const matList = [
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-  {
-    img: img,
-    title: 'Название Название'
-  },
-]
 import defaultAvatar from "~/assets/img/def-spec.jpg"
 
 const readOnly = ref(true)
@@ -47,23 +26,25 @@ const authToken = useCookie("auth_token")
 const materials = ref([]);
 const freeMaterials = ref([]);
 const payMaterials = ref([]);
+const dopMaterials = ref([]);
 async function getMaterials() {
-  
+
   try {
     const res = await $fetch(`${apiStore.apiUrl}materials?_embed`);
     materials.value = res;
     console.log('materials', materials.value);
     for (let m of materials.value) {
       for (let c of m.categories) {
-        if (c == 3 ){
+        if (c == 3) {
           freeMaterials.value.push(m)
         } else if (c == 4) {
           payMaterials.value.push(m)
-        }
+        } else if (c == 8) {
+          dopMaterials.value.push(m)
+        } 
       }
     }
   } catch (error) {
-    console.error("Ошибка при получении материала:", error);
     return null;
   }
 }
@@ -78,8 +59,6 @@ onMounted(async () => {
         Authorization: `Bearer ${authToken.value}`,
       },
     })
-
-    console.log("USER", user)
 
     inputName.value = user.name || ""
     inputPhone.value = user.meta?.phone || ""
@@ -173,9 +152,6 @@ const saveAcc = async () => {
     console.error("Ошибка сохранения профиля:", err)
   }
 }
-
-
-
 </script>
 <template>
   <div class="acc">
@@ -190,6 +166,9 @@ const saveAcc = async () => {
         <div class="acc__side-item" :class="{ active: activeTab === 2 }" @click="activeTab = 2">
           Платные материалы
         </div>
+        <div class="acc__side-item" :class="{ active: activeTab === 3 }" @click="activeTab = 3">
+          Дополнительные материалы
+        </div>
       </div>
       <div class="acc__content">
         <div v-show="activeTab === 0" class="acc__slide">
@@ -198,7 +177,8 @@ const saveAcc = async () => {
             <div class="acc__box">
               <div class="box-avatar">
                 <img :src="srcPhoto ? srcPhoto : defaultAvatar" alt="avatar" />
-                <input :readonly="readOnly" type="file" id="photo" @change="onFileChange" hidden class="hidden-input" required />
+                <input :readonly="readOnly" type="file" id="photo" @change="onFileChange" hidden class="hidden-input"
+                  required />
                 <label for="photo">
                   Загрузить фото
                 </label>
@@ -206,26 +186,31 @@ const saveAcc = async () => {
               <div class="acc__box-list">
                 <div class="acc__box-i">
                   <div class="box-input">
-                    <input :readonly="readOnly" v-model="inputName" type="text" id="name" placeholder=" " ref="inputRef" required />
+                    <input :readonly="readOnly" v-model="inputName" type="text" id="name" placeholder=" " ref="inputRef"
+                      required />
                     <label :class="{ hidden: inputName.trim() !== '' }" for="name">ФИО</label>
                   </div>
                   <div class="box-input">
-                    <input :readonly="readOnly" v-model="inputOrganization" type="text" id="organization" placeholder=" " ref="inputRef" />
+                    <input :readonly="readOnly" v-model="inputOrganization" type="text" id="organization"
+                      placeholder=" " ref="inputRef" />
                     <label :class="{ hidden: inputOrganization.trim() !== '' }" for="organization">Наименование
                       организации</label>
                   </div>
                   <div class="box-input">
-                    <input :readonly="readOnly" v-model="inputWork" type="text" id="work" placeholder=" " ref="inputRef" required />
+                    <input :readonly="readOnly" v-model="inputWork" type="text" id="work" placeholder=" " ref="inputRef"
+                      required />
                     <label :class="{ hidden: inputWork.trim() !== '' }" for="work">Род деятельности</label>
                   </div>
                 </div>
                 <div class="acc__box-i">
                   <div class="box-input">
-                    <input :readonly="readOnly" v-model="inputPhone" type="text" id="phone" placeholder=" " ref="phoneRef" required />
+                    <input :readonly="readOnly" v-model="inputPhone" type="text" id="phone" placeholder=" "
+                      ref="phoneRef" required />
                     <label :class="{ hidden: inputPhone.trim() !== '' }" for="phone">Номер телефона</label>
                   </div>
                   <div class="box-input">
-                    <input :readonly="readOnly" v-model="inputCity" type="text" id="city" placeholder=" " ref="inputRef" required />
+                    <input :readonly="readOnly" v-model="inputCity" type="text" id="city" placeholder=" " ref="inputRef"
+                      required />
                     <label :class="{ hidden: inputCity.trim() !== '' }" for="city">Город</label>
                   </div>
                 </div>
@@ -244,22 +229,36 @@ const saveAcc = async () => {
         <div v-show="activeTab === 1" class="acc__slide">
           <h2 class="acc__head">Бесплатные материалы</h2>
           <div class="mat__list">
-            <div class="mat__item" v-for="(item, index) in freeMaterials" :key="index">
-              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+            <NuxtLink class="mat__item" v-for="(item, index) in freeMaterials" :key="index" :to="item.acf.url"
+              target="_blank">
+              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url"
+                :alt="item.title.rendered" />
               <h3>{{ item.title.rendered }}</h3>
-            </div>
+            </NuxtLink>
           </div>
         </div>
         <div v-show="activeTab === 2" class="acc__slide">
           <h2 class="acc__head">Платные материалы</h2>
-          <p>После оплаты, ожидайте письмо на почте с купленным материалом. И не забудьте проверить спам на всякий случай.</p>
+          <p class="acc__text">После оплаты - пришлите пожалуйста чек в Telegram <a href="https://t.me/abisrs1" target="_blank">@abisrs1</a></p>
           <div class="mat__list">
             <div class="mat__item" v-for="(item, index) in payMaterials" :key="index">
-              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url" :alt="item.title.rendered" />
+              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url"
+                :alt="item.title.rendered" />
               <h3>{{ item.title.rendered }}</h3>
               <p v-if="item.acf.price && item.acf.price != ''">{{ item.acf.price }} ₽</p>
               <a :href="item.acf.url" class="btn"><span>Купить</span></a>
             </div>
+          </div>
+        </div>
+        <div v-show="activeTab === 3" class="acc__slide">
+          <h2 class="acc__head">Дополнительные материалы</h2>
+          <div class="mat__list">
+            <NuxtLink class="mat__item" v-for="(item, index) in dopMaterials" :key="index" :to="item.acf.url"
+              target="_blank">
+              <img v-if="item?._embedded['wp:featuredmedia']" :src="item?._embedded['wp:featuredmedia'][0].source_url"
+                :alt="item.title.rendered" />
+              <h3>{{ item.title.rendered }}</h3>
+            </NuxtLink>
           </div>
         </div>
       </div>
@@ -277,6 +276,12 @@ const saveAcc = async () => {
   .container
     display: flex
     gap: 50px
+  &__text 
+    font-weight: 500
+    text-align: left
+    font-size: 20px
+    line-height: 130%
+    margin-bottom: 30px
   &__side
     display: flex
     flex-direction: column
@@ -298,15 +303,8 @@ const saveAcc = async () => {
       &.active, &:hover
         background: #196064
         color: #fff
-
   &__content 
     width: 100%
-    .acc__slide
-      p
-        font-size: 16px
-        line-height: 130%
-        text-align: center
-        margin-bottom: 15px
 .box-input__textarea
   grid-column: 1 / 3
   width: 100%
@@ -403,7 +401,7 @@ const saveAcc = async () => {
       border-radius: 15px
       margin-bottom: 15px
     h3
-      font-size: 25px
+      font-size: 20px
       color: #181818
       line-height: 130%
       font-weight: 600
@@ -441,6 +439,8 @@ const saveAcc = async () => {
   .mat__list
     grid-template-columns: repeat(2, 1fr)
 @media (max-width: 620px)
+  .acc
+    padding: 20px 0 60px
   .acc__side
     flex-direction: column
   .acc__side-item
@@ -451,7 +451,7 @@ const saveAcc = async () => {
     grid-template-columns: repeat(1, 1fr)
   .mat__item
     img 
-      height: 200px
+      height: 100%
     h3
       font-size: 18px
 </style>

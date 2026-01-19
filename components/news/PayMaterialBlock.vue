@@ -76,7 +76,7 @@ const props = defineProps({
     grid-template-columns: repeat(1, 1fr)
   .mat__item
     img
-      height: 250px
+      height: 100%
     h3
       font-size: 18px
 </style>

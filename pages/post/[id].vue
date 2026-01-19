@@ -13,38 +13,14 @@ const { data: postData } = await useAsyncData("post", () =>
 
 const post = computed(() => postData.value?.[0] || null);
 console.log("POST", post);
-const title = {
-  title: "Рекомендации по восстановлению после утраты близкого человека",
-};
-const postDops = [
-  {
-    title: "Дайте себе пространство и время для скорби",
-    text: "Не подавляйте свои эмоции. Позвольте себе плакать, говорить о своих чувствах и находить способы их выразить. Будьте готовы, что боль будет уходить, и будет приходить радость.",
-  },
-  {
-    title: "Обращайтесь за помощью и поддержкой",
-    text: "Обратитесь к близким.Расскажите людям, что вам нужно – если вы этого не сделаете, они могут не знать, как помочь, или они могут чувствовать себя некомфортно, предлагая что-то.",
-  },
-  {
-    title: "",
-    text: "Профессиональная поддержкаОбратитесь к психологу, терапевту, специалисту по гореванию, доуле смерти. Помимо этого можно посетить группы поддержки.",
-  },
-  {
-    title: "Старайтесь планировать свои дни",
-    text: "Создавайте расписание, чтобы предотвратить ощущение пустоты. Включайте в него любимые занятия и время для отдыха. Вы можете начать заниматься прежними интересами и хобби или подумать о том, чтобы начать новые.",
-  },
-  {
-    title: "Сохраняйте память",
-    text: "Уважение к памяти о вашем близком может быть неотъемлемой частью процесса проживания горя. Создание или поддержание традиций, которые были важны для вас и вашего близкого, поможет сохранить связь с ним.",
-  },
-];
 </script>
 
 <template>
 
   <Head>
     <Title>ABISRS - {{ post?.title.rendered }}</Title>
-    <Meta name="description" :content="post?.acf?.metadescription ? post.acf.metadescription : 'Альянс бальзамировщиков и специалистов ритуального сервиса'" />
+    <Meta name="description"
+      :content="post?.acf?.metadescription ? post.acf.metadescription : 'Альянс бальзамировщиков и специалистов ритуального сервиса'" />
   </Head>
   <TitleBlock :title="post?.title.rendered" />
   <Breadcrumbs :breadcrumbs="[
@@ -63,7 +39,7 @@ const postDops = [
       </div>
     </div>
   </div>
-  <div class="post__dop">
+  <div v-if="post.acf.title" class="post__dop">
     <div class="container">
       <div class="post__dop-head">{{ post.acf.title }}</div>
       <div class="post__dop-content">
@@ -75,10 +51,17 @@ const postDops = [
       </div>
       <div class="post__text4">
         <h2>{{ post.acf.title_down }}</h2>
-        <div class="post__btn">
-          <NuxtLink to="/specialists" class="btn"><span>Найти специалиста</span></NuxtLink>
-        </div>
       </div>
+    </div>
+  </div>
+  <div class="post__bot" v-if="post?.acf?.text_down">
+    <div class="container">
+      <div class="post__bot-text" v-html="post.acf.text_down"></div>
+    </div>
+  </div>
+  <div class="post__btn">
+    <div class="container">
+      <NuxtLink to="/specialists" class="btn"><span>Найти специалиста</span></NuxtLink>
     </div>
   </div>
 </template>
@@ -86,10 +69,22 @@ const postDops = [
 
 <style lang="sass">
 .post
-
   &__dop
     background-color: #fff
+    margin-bottom: 30px
+  &__bot 
+    margin-bottom: 40px
+    &-text 
+      display: flex
+      flex-direction: column
+      gap: 15px
+      font-size: 22px
+      line-height: 130%
+  &__btn 
     margin-bottom: 100px
+    display: flex
+    align-items: center
+    justify-content: center
   &__dop-head
     font-size: 40px
     line-height: 130%
@@ -151,6 +146,11 @@ const postDops = [
     font-size: 22px
     line-height: 130%
     color: #181818
+    img 
+      max-width: 700px
+      border-radius: 15px
+      width: 100%
+      height: auto
     h2
       margin-bottom: 15px
     hr
@@ -189,6 +189,8 @@ const postDops = [
       line-height: 130%
       hr
         margin: 10px 0
+    &__bot-text 
+      font-size: 20px
     &__text3
       font-size: 20px
     &__dop
@@ -203,12 +205,16 @@ const postDops = [
         h3
           font-size: 25px
 @media (max-width: 620px)
+  .post__text4 h2 
+    padding: 15px 0
   .post
     padding-bottom: 30px
     &__text
       font-size: 16px
     &__text3
       font-size: 20px
+    &__bot-text
+      font-size: 16px
     &__dop
       &-head
         font-size: 22px

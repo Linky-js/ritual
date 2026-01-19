@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     head: {
       title: 'Абисрс',
       meta: [
-        { name: 'apple-mobile-web-app-title', content: 'Абисрс' }
+        { name: 'apple-mobile-web-app-title', content: 'ABISRS' }
       ],
       link: [
         { rel: 'icon', type: 'image/png', href: '/favicon-96x96.png', sizes: '96x96' },

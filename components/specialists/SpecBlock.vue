@@ -1,7 +1,7 @@
 <script setup>
+import { NuxtLink } from '#components';
 import SpecItem from '../common/SpecItem.vue';
 import TitleMinBlock from '../common/TitleMinBlock.vue';
-import img from '../../assets/img/def-spec.jpg'
 
 const props = defineProps({
   specialistsBlockObject: {
@@ -15,14 +15,18 @@ const props = defineProps({
 
   <div class="spec">
     <div class="container">
-     
+
       <TitleMinBlock title="Ритуальные агенты" />
       <div class="spec__blocks--wrapper">
         <div v-for="(specialists, index) in specialistsBlockObject" :key="index" class="spec__block">
           <div class="spec__head">{{ specialists.title }}</div>
           <div class="spec__list">
-            <SpecItem v-for="(item, index) in specialists.items" :key="index" :name="item.title.rendered" :img="item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : ''"
-              :description="item.excerpt.rendered" />
+            <NuxtLink v-for="(item, index) in specialists.items" :key="index" class="spec__item"
+              :to="`/specialists/${item.slug}`">
+              <SpecItem :name="item.title.rendered"
+                :img="item._embedded['wp:featuredmedia'] ? item._embedded['wp:featuredmedia'][0].source_url : ''"
+                :description="item.excerpt.rendered" />
+            </NuxtLink>
           </div>
         </div>
       </div>

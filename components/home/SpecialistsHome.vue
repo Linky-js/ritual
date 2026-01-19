@@ -1,68 +1,28 @@
 <script setup>
-import img from '../../assets/img/def-spec.jpg'
+import { NuxtLink } from '#components'
 import SpecItem from '~/components/common/SpecItem.vue'
+import { useApiStore } from '~/stores/api'
 
-const props = defineProps({
-  specialistsBlockObject: {
-    type: Object,
-    default: {}
-  }
-})
-const specialists = [
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
-  {
-    name: 'Наталья Иванова',
-    img: img,
-    description: 'Психолог, стаж 10 лет'
-  },
-  {
-    name: 'Игорь Смирнов',
-    img: img,
-    description: 'Ритуальный агент'
-  },
+const apiStore = useApiStore()
 
-]
-
-
+const { data: specialists, error } = await useAsyncData('specialists', () =>
+  $fetch(`${apiStore.apiUrl}specialist?_embed`)
+)
 </script>
+
 <template>
   <div class="spechome">
     <div class="container">
       <div class="spechome__list">
-        <SpecItem v-for="(spec, index) in specialistsBlockObject.specialists" :key="index" :name="spec.title.rendered"
-          :description="spec.excerpt.rendered" :img="spec._embedded['wp:featuredmedia'][0].source_url" />
+        <NuxtLink v-for="(item, index) in specialists || []" :key="index" :to="`/specialists/${item.slug}`">
+          <SpecItem :name="item.title?.rendered || 'Без имени'" :description="item.excerpt?.rendered || ''"
+            :img="item._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''" />
+        </NuxtLink>
       </div>
       <div class="spechome__btn">
-        <NuxtLink to="/specialists" class="btn"><span>Найти спецалиста рядом</span></NuxtLink>
+        <NuxtLink to="/specialists" class="btn">
+          <span>Найти специалиста рядом</span>
+        </NuxtLink>
       </div>
     </div>
   </div>
